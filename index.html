@@ -227,10 +227,10 @@
     background: var(--white);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
-    overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
     border: 2px solid transparent;
+    position: relative;
   }
   .case-card:hover {
     transform: translateY(-4px);
@@ -243,6 +243,7 @@
 
   .card-accent {
     height: 4px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   }
   .card-accent.ba { background: var(--teal-dark); }
   .card-accent.cf { background: var(--gold); }
@@ -326,7 +327,6 @@
   }
   .fav-btn:hover { transform: scale(1.1); box-shadow: var(--shadow); }
   .fav-btn.active { background: #fef3c7; }
-  .case-card { position: relative; }
 
   /* VIEW TOGGLE */
   .view-toggle {
