@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Challenge Catalog — Abilitie</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2332;
+    --navy-light: #243044;
+    --navy-mid: #2c3e56;
+    --teal: #00b4d8;
+    --teal-dark: #0096b7;
+    --gold: #f4a261;
+    --coral: #e76f51;
+    --sage: #2a9d8f;
+    --purple: #8b5cf6;
+    --white: #ffffff;
+    --off-white: #f8fafc;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+    --shadow-xl: 0 20px 60px rgba(0,0,0,0.15);
+    --radius: 12px;
+    --radius-lg: 16px;
+    --transition: 0.2s ease;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--off-white);
+    color: var(--gray-800);
+    line-height: 1.6;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 50%, var(--navy-mid) 100%);
+    color: var(--white);
+    padding: 48px 32px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -25%;
+    width: 150%; height: 200%;
+    background: radial-gradient(ellipse at 30% 50%, rgba(0,180,216,0.1) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(244,162,97,0.08) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero-badge {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .hero-sub {
+    font-size: 16px;
+    color: var(--gray-300);
+    max-width: 600px;
+    font-weight: 400;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .hero-stat {
+    text-align: center;
+  }
+  .hero-stat .num {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--teal);
+  }
+  .hero-stat .label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+
+  /* FILTERS */
+  .filter-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--gray-200);
+    padding: 16px 32px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-sm);
+  }
+  .filter-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+  }
+  .filter-btn {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--gray-200);
+    background: var(--white);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .filter-btn:hover {
+    border-color: var(--gray-300);
+    background: var(--gray-50);
+  }
+  .filter-btn.active {
+    background: var(--navy);
+    color: var(--white);
+    border-color: var(--navy);
+  }
+  .filter-btn.active.ba { background: var(--teal-dark); border-color: var(--teal-dark); }
+  .filter-btn.active.cf { background: var(--gold); border-color: var(--gold); }
+  .filter-btn.active.tm { background: var(--sage); border-color: var(--sage); }
+  .filter-btn.active.ts { background: var(--purple); border-color: var(--purple); }
+
+  .search-box {
+    flex: 1;
+    min-width: 200px;
+    max-width: 320px;
+    position: relative;
+  }
+  .search-box input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: var(--transition);
+  }
+  .search-box input:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(0,180,216,0.1);
+  }
+  .search-box::before {
+    content: '🔍';
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    opacity: 0.5;
+  }
+
+  /* MAIN */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+  .results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .results-count {
+    font-size: 14px;
+    color: var(--gray-500);
+  }
+  .results-count strong {
+    color: var(--gray-800);
+    font-weight: 600;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+  }
+
+  .case-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid transparent;
+  }
+  .case-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+  .case-card.ba:hover { border-color: var(--teal-dark); }
+  .case-card.cf:hover { border-color: var(--gold); }
+  .case-card.tm:hover { border-color: var(--sage); }
+  .case-card.ts:hover { border-color: var(--purple); }
+
+  .card-accent {
+    height: 4px;
+  }
+  .card-accent.ba { background: var(--teal-dark); }
+  .card-accent.cf { background: var(--gold); }
+  .card-accent.tm { background: var(--sage); }
+  .card-accent.ts { background: var(--purple); }
+
+  .card-body {
+    padding: 20px 24px 24px;
+  }
+  .card-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 4px;
+  }
+  .badge.ba { background: rgba(0,150,183,0.12); color: var(--teal-dark); }
+  .badge.cf { background: rgba(244,162,97,0.15); color: #c97a2c; }
+  .badge.tm { background: rgba(42,157,143,0.12); color: var(--sage); }
+  .badge.ts { background: rgba(139,92,246,0.12); color: var(--purple); }
+  .badge.level { background: var(--gray-100); color: var(--gray-600); }
+  .badge.archetype { background: var(--navy); color: var(--white); }
+
+  .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .card-hook {
+    font-size: 14px;
+    color: var(--gray-600);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-meta {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-100);
+    font-size: 12px;
+    color: var(--gray-500);
+  }
+  .card-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 720px;
+    height: 100vh;
+    background: var(--white);
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+  }
+  .modal.open {
+    transform: translateX(0);
+  }
+
+  .modal-header {
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    padding: 20px 28px;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 10;
+  }
+  .modal-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: none;
+    background: var(--gray-100);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+  }
+  .modal-close:hover {
+    background: var(--gray-200);
+  }
+
+  .modal-content {
+    padding: 28px;
+  }
+
+  .modal-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .modal-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .modal-hook {
+    font-size: 16px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    padding: 20px;
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    border-left: 4px solid var(--teal);
+    margin-bottom: 28px;
+  }
+
+  .modal-aha {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: var(--white);
+    padding: 20px 24px;
+    border-radius: var(--radius);
+    margin-bottom: 28px;
+  }
+  .modal-aha-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--teal);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .modal-aha-text {
+    font-size: 15px;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .modal-section {
+    margin-bottom: 28px;
+  }
+  .modal-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-400);
+    margin-bottom: 14px;
+  }
+
+  .modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .modal-block {
+    background: var(--gray-50);
+    border-radius: var(--radius);
+    padding: 16px;
+  }
+  .modal-block h4 {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--gray-500);
+    margin-bottom: 10px;
+  }
+  .modal-block.ba { border-left: 3px solid var(--teal-dark); }
+  .modal-block.cf { border-left: 3px solid var(--gold); }
+  .modal-block.tm { border-left: 3px solid var(--sage); }
+  .modal-block.ts { border-left: 3px solid var(--purple); }
+
+  .modal-block ul {
+    list-style: none;
+  }
+  .modal-block li {
+    font-size: 13px;
+    color: var(--gray-700);
+    padding: 6px 0;
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .modal-block li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gray-300);
+  }
+  .modal-block.ba li::before { background: var(--teal-dark); }
+  .modal-block.cf li::before { background: var(--gold); }
+  .modal-block.tm li::before { background: var(--sage); }
+  .modal-block.ts li::before { background: var(--purple); }
+
+  /* CHAPTERS */
+  .chapters-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .chapter-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .chapter-header {
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .chapter-header:hover {
+    background: var(--gray-50);
+  }
+  .chapter-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+  .chapter-info {
+    flex: 1;
+  }
+  .chapter-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 2px;
+  }
+  .chapter-subtitle {
+    font-size: 13px;
+    color: var(--gray-500);
+  }
+  .chapter-duration {
+    font-size: 12px;
+    color: var(--gray-400);
+    background: var(--gray-100);
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .chapter-toggle {
+    margin-left: 12px;
+    font-size: 14px;
+    color: var(--gray-400);
+    transition: transform 0.2s;
+  }
+  .chapter-card.open .chapter-toggle {
+    transform: rotate(180deg);
+  }
+
+  .chapter-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .chapter-card.open .chapter-body {
+    max-height: 500px;
+  }
+  .chapter-content {
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--gray-100);
+  }
+  .chapter-objective {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin: 14px 0;
+    padding: 12px;
+    background: var(--gray-50);
+    border-radius: 8px;
+  }
+  .chapter-objective strong {
+    color: var(--gray-700);
+  }
+  .chapter-blocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .block-chip {
+    font-size: 11px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .block-chip.Resource { background: #dbeafe; color: #1e40af; }
+  .block-chip.Custom { background: #fef3c7; color: #92400e; }
+  .block-chip.Conversation { background: #d1fae5; color: #065f46; }
+  .block-chip.UserInput { background: #fae8ff; color: #86198f; }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    color: var(--gray-500);
+  }
+  .empty-state h3 {
+    font-size: 18px;
+    color: var(--gray-700);
+    margin-bottom: 8px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .modal-grid { grid-template-columns: 1fr; }
+    .hero { padding: 32px 20px; }
+    .hero h1 { font-size: 28px; }
+    .filter-bar { padding: 12px 16px; }
+    .filter-inner { gap: 12px; }
+    .main { padding: 20px 16px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .modal { max-width: 100%; }
+  }
+  @media (max-width: 600px) {
+    .filter-group { flex-wrap: wrap; }
+    .search-box { max-width: 100%; min-width: 100%; order: -1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Abilitie Leadership Academy</div>
+    <h1>Case Challenge Catalog</h1>
+    <p class="hero-sub">Interactive learning experiences designed to build leadership capabilities through realistic scenarios, conversations, and hands-on practice.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num" id="stat-total">60</div><div class="label">Cases</div></div>
+      <div class="hero-stat"><div class="num">4</div><div class="label">Pillars</div></div>
+      <div class="hero-stat"><div class="num">3</div><div class="label">Levels</div></div>
+      <div class="hero-stat"><div class="num">3</div><div class="label">Formats</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="filter-group">
+      <span class="filter-label">Pillar:</span>
+      <button class="filter-btn active" data-filter="pillar" data-value="all">All</button>
+      <button class="filter-btn ba" data-filter="pillar" data-value="ba">Business Acumen</button>
+      <button class="filter-btn cf" data-filter="pillar" data-value="cf">Cross-Functional</button>
+      <button class="filter-btn tm" data-filter="pillar" data-value="tm">Team Mgmt</button>
+      <button class="filter-btn ts" data-filter="pillar" data-value="ts">Talent Selection</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Level:</span>
+      <button class="filter-btn active" data-filter="level" data-value="all">All</button>
+      <button class="filter-btn" data-filter="level" data-value="rising">Rising</button>
+      <button class="filter-btn" data-filter="level" data-value="experienced">Experienced</button>
+      <button class="filter-btn" data-filter="level" data-value="executive">Executive</button>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Format:</span>
+      <button class="filter-btn active" data-filter="archetype" data-value="all">All</button>
+      <button class="filter-btn" data-filter="archetype" data-value="mini-sim">Mini-Sim</button>
+      <button class="filter-btn" data-filter="archetype" data-value="biz-school">Biz School</button>
+      <button class="filter-btn" data-filter="archetype" data-value="ted-talk">TED Talk</button>
+    </div>
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search cases...">
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-header">
+    <div class="results-count">Showing <strong id="results-count">60</strong> cases</div>
+  </div>
+  <div class="cards-grid" id="cards-grid"></div>
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <h3>No cases found</h3>
+    <p>Try adjusting your filters or search term.</p>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay"></div>
+<div class="modal" id="modal">
+  <div class="modal-header">
+    <div></div>
+    <button class="modal-close" id="modal-close">✕</button>
+  </div>
+  <div class="modal-content" id="modal-content"></div>
+</div>
+
+<script>
+const cases = [{id: 1, title: "Reading the Signals", pillar: "ba", level: "rising", archetype: "mini-sim", hook: "Your company's dashboard is green across the board—but your newest analyst just flagged something nobody else sees. You have 48 hours to prove whether the market is about to shift or she's chasing ghosts.", competencies: ["Interpret market/competitive data for strategic positioning", "Identify leading vs lagging indicators in financial data", "Communicate competitive analysis to stakeholders"], mindsets: ["Competitive awareness — benchmark against market dynamics", "Data tells a story — ask the right questions", "Speed of insight matters"], tools: ["Competitive Analysis Framework", "Leading vs Lagging Indicator Model", "Financial Signal Detection"], aha: "Leading indicators don't predict the future—they reveal what's already changing. The market has already spoken; you're just learning to listen.", chapters: [{title: "Market Noise, Real Signals", subtitle: "Distinguish leading and lagging indicators", objective: "Analyze datasets to identify predictive vs reflective metrics", duration: 20, blocks: [{type: "Resource", label: "Case Context – VentureTech Analytics"}, {type: "Resource", label: "Market Data Dashboard"}, {type: "Custom", label: "Signal vs Noise Analyzer"}, {type: "Conversation", label: "Marcus Wei – VP Sales"}, {type: "UserInput", label: "Leading Indicators Summary"}]}, {title: "Competitive Reading", subtitle: "Interpret competitor moves as market signals", objective: "Use competitor actions to infer strategy", duration: 25, blocks: [{type: "Resource", label: "Competitor Activity Timeline"}, {type: "Custom", label: "Pattern Recognition Widget"}, {type: "Conversation", label: "Priya Kapoor – Head of Product"}, {type: "UserInput", label: "Competitive Strategy Assessment"}]}, {title: "Forecast and Recommend", subtitle: "Build market outlook and recommend allocation", objective: "Synthesize indicators into forward-looking view", duration: 20, blocks: [{type: "Resource", label: "Planning Session Agenda"}, {type: "Custom", label: "Scenario Builder"}, {type: "Conversation", label: "Pitch to Sarah and Leadership Team"}]}]}, {id: 2, title: "The Portfolio Puzzle", pillar: "ba", level: "experienced", archetype: "mini-sim", hook: "Three business units, three very different stories, and the CEO wants your recommendation by Friday. The numbers say one thing; the people running those units say another.", competencies: ["Evaluate BU performance using portfolio analysis", "Make resource reallocation decisions across BUs", "Present portfolio strategy with financial logic"], mindsets: ["Portfolio thinking — not every unit deserves same investment", "Sunk cost discipline", "Capital has a cost"], tools: ["Portfolio Analysis Matrix (BCG-style)", "ROIC by Business Unit", "Resource Reallocation Framework"], aha: "Your best business units are often holding back your best people. Portfolio reallocation is really about admitting where you've stopped winning.", chapters: [{title: "Know Your Portfolio", subtitle: "Map business unit economics", objective: "Understand profitability across BU portfolio", duration: 20, blocks: [{type: "Resource", label: "Case Introduction – Meridian Industrial"}, {type: "Resource", label: "Portfolio Data Pack"}, {type: "Custom", label: "Portfolio Dashboard"}, {type: "Conversation", label: "Thomas Liao – CFO"}, {type: "UserInput", label: "Portfolio Assessment"}]}, {title: "Reallocation Scenarios", subtitle: "Stress-test allocation paths", objective: "Model capital reallocation scenarios", duration: 25, blocks: [{type: "Resource", label: "Board Questions"}, {type: "Custom", label: "Scenario Modeler"}, {type: "Conversation", label: "Marcus Rivera – Equipment BU Head"}, {type: "Conversation", label: "Diana Okonkwo – Solutions BU Head"}, {type: "UserInput", label: "Recommended Allocation"}]}, {title: "Present to the Board", subtitle: "Defend portfolio strategy under pressure", objective: "Present recommendation and handle tough questions", duration: 25, blocks: [{type: "Resource", label: "Board Briefing Format"}, {type: "Custom", label: "Presentation Outline Tool"}, {type: "MultiConversation", label: "Board Qconst cases = [/* CASES_DATA_PLACEHOLDER */];A Session"}]}, {title: "Monitor and Adapt", subtitle: "Set up leading indicators", objective: "Design quarterly review process", duration: 15, blocks: [{type: "Resource", label: "Implementation Kickoff"}, {type: "Custom", label: "Balanced Scorecard Builder"}, {type: "UserInput", label: "Quarterly Review Protocol"}]}]}, {id: 3, title: "The Investor Pitch", pillar: "ba", level: "executive", archetype: "mini-sim", hook: "The board just gave you 20 minutes to convince a skeptical investor your company is worth twice its current valuation. Your CFO's slides are ready—but the story they tell isn't the one you'd tell.", competencies: ["Synthesize financial data into investor narrative", "Defend strategic choices using ROIC and positioning", "Handle tough Qconst cases = [/* CASES_DATA_PLACEHOLDER */];A from financial audiences"], mindsets: ["Think like an owner not operator", "Numbers without narrative are noise", "Transparency builds trust"], tools: ["Investor Presentation Framework", "ROIC Communication Model", "Qconst cases = [/* CASES_DATA_PLACEHOLDER */];A Preparation Matrix"], aha: "Investors don't fund past performance; they fund your willingness to sacrifice short-term profits for long-term positioning.", chapters: [{title: "Know Your Numbers", subtitle: "Build the financial narrative", objective: "Articulate unit economics and growth drivers", duration: 20, blocks: [{type: "Resource", label: "Investor Meeting Context"}, {type: "Resource", label: "Historical Financials"}, {type: "Custom", label: "Unit Economics Dashboard"}, {type: "Conversation", label: "Lisa Huang – CFO"}, {type: "UserInput", label: "Financial Story Brief"}]}, {title: "The Narrative const cases = [/* CASES_DATA_PLACEHOLDER */]; Trade-offs", subtitle: "Articulate investment thesis", objective: "Frame growth strategy for investors", duration: 25, blocks: [{type: "Resource", label: "VC Due Diligence Questions"}, {type: "Resource", label: "Competitive Landscape Brief"}, {type: "Custom", label: "Narrative Builder"}, {type: "Conversation", label: "David Park – VP Product"}, {type: "UserInput", label: "Investment Thesis Statement"}]}, {title: "The Pitch Room", subtitle: "Deliver investor presentation", objective: "Present compelling case under scrutiny", duration: 25, blocks: [{type: "Custom", label: "Pitch Deck Builder"}, {type: "MultiConversation", label: "VC Partner Panel Qconst cases = [/* CASES_DATA_PLACEHOLDER */];A"}]}, {title: "Post-Pitch Reflection", subtitle: "Debrief and refine", objective: "Process feedback and strengthen pitch", duration: 15, blocks: [{type: "Resource", label: "VC Feedback Summary"}, {type: "Conversation", label: "Lisa Huang – Debrief"}, {type: "UserInput", label: "Revised Pitch Strategy"}]}]}, {id: 4, title: "The Pricing Gauntlet", pillar: "ba", level: "executive", archetype: "mini-sim", hook: "A competitor just undercut your flagship product by 30%, and your sales team is panicking. The easy move is to match their price—but your COO says that's the beginning of the end.", competencies: ["Model pricing scenarios with margin implications", "Navigate cross-functional pricing tensions", "Present pricing strategy to board"], mindsets: ["Price communicates value not just cost", "Margin discipline > revenue growth", "Customer willingness-to-pay is the constraint"], tools: ["Pricing Strategy Framework", "Margin Sensitivity Analysis", "Competitive Pricing Map"], aha: "Every pricing decision is a strategy decision in disguise. When you change your price, you change who your customer is.", chapters: [{title: "Price Discovery", subtitle: "Analyze pricing and willingness to pay", objective: "Map pricing landscape and margin drivers", duration: 20, blocks: [{type: "Resource", label: "NovaPharma Pricing Brief"}, {type: "Resource", label: "Customer Segmentation Data"}, {type: "Custom", label: "Price Sensitivity Dashboard"}, {type: "Conversation", label: "Rachel Torres – VP Sales"}, {type: "UserInput", label: "Pricing Analysis"}]}, {title: "Scenario Modeling", subtitle: "Build and test pricing scenarios", objective: "Model impact of pricing changes", duration: 25, blocks: [{type: "Resource", label: "Competitive Pricing Intel"}, {type: "Custom", label: "Pricing Scenario Modeler"}, {type: "Conversation", label: "Daniel Kim – Finance Director"}, {type: "UserInput", label: "Recommended Pricing Strategy"}]}, {title: "The Pricing War Room", subtitle: "Navigate cross-functional tensions", objective: "Align sales, finance, product around pricing", duration: 25, blocks: [{type: "MultiConversation", label: "Cross-Functional Pricing Debate"}, {type: "UserInput", label: "Final Pricing Recommendation"}]}, {title: "Board Defense", subtitle: "Present pricing strategy to board", objective: "Defend pricing choices under scrutiny", duration: 15, blocks: [{type: "Custom", label: "Board Presentation Builder"}, {type: "MultiConversation", label: "Board Qconst cases = [/* CASES_DATA_PLACEHOLDER */];A on Pricing"}]}]}, {id: 5, title: "The Cross-Border Deal", pillar: "cf", level: "experienced", archetype: "mini-sim", hook: "A joint venture with a Tokyo-based partner is three weeks from signing, and the deal team just discovered a clause that means very different things in each country. Walking away costs millions; pushing forward could cost more.", competencies: ["Navigate cross-functional complexities internationally", "Manage cultural differences in deal-making", "Coordinate legal, finance, ops across borders"], mindsets: ["Global thinking requires local sensitivity", "Cross-functional alignment harder across cultures", "Patience and relationship-building matter"], tools: ["Cross-Border Due Diligence Checklist", "Cultural Navigation Map", "Stakeholder Alignment Matrix"], aha: "The deal isn't done when both sides sign—it's done when both sides deliver. Cross-border execution is where most deals die.", chapters: [{title: "The Opportunity", subtitle: "Evaluate cross-border acquisition target", objective: "Assess strategic fit and cross-functional implications", duration: 20, blocks: [{type: "Resource", label: "GreenTech Acquisition Brief"}, {type: "Resource", label: "Target Company Profile"}, {type: "Custom", label: "Strategic Fit Analyzer"}, {type: "Conversation", label: "Maria Santos – VP Corp Dev"}, {type: "UserInput", label: "Initial Assessment"}]}, {title: "Due Diligence Maze", subtitle: "Navigate cross-functional due diligence", objective: "Coordinate legal, financial, operational DD", duration: 25, blocks: [{type: "Resource", label: "Due Diligence Workstreams"}, {type: "MultiConversation", label: "Cross-Functional DD Team"}, {type: "Custom", label: "Risk Assessment Matrix"}, {type: "UserInput", label: "DD Summary const cases = [/* CASES_DATA_PLACEHOLDER */]; Risks"}]}, {title: "Cultural Navigation", subtitle: "Bridge cultural differences", objective: "Navigate cultural tensions in deal-making", duration: 25, blocks: [{type: "Resource", label: "Cultural Context Brief"}, {type: "Conversation", label: "Yuki Tanaka – Japan Office Lead"}, {type: "Conversation", label: "Hans Mueller – German Operations"}, {type: "UserInput", label: "Cultural Navigation Plan"}]}, {title: "Close the Deal", subtitle: "Negotiate final terms", objective: "Align all parties and close", duration: 20, blocks: [{type: "MultiConversation", label: "Final Negotiation Session"}, {type: "UserInput", label: "Integration Roadmap"}]}]}, {id: 6, title: "The Integration Sprint", pillar: "cf", level: "executive", archetype: "mini-sim", hook: "Two companies became one on paper six months ago, but on the ground, people are still introducing themselves as 'legacy Apex' or 'legacy Meridian.' You have 90 days to make this feel like one company—or the talent exodus begins.", competencies: ["Lead post-merger integration across functions", "Manage competing priorities and cultural clashes", "Deliver synergy targets within timeline"], mindsets: ["First 100 days define success", "Culture eats strategy in mergers", "Synergy math is optimistic"], tools: ["100-Day Integration Plan", "Synergy Tracking Dashboard", "Cultural Integration Assessment"], aha: "Synergy targets look great in a spreadsheet. On the ground, they're human beings who just lost their certainty about the future.", chapters: [{title: "Day 1: The Kickoff", subtitle: "Launch post-merger integration", objective: "Establish governance and priorities", duration: 20, blocks: [{type: "Resource", label: "Merger Announcement"}, {type: "Resource", label: "Integration Plan Overview"}, {type: "Custom", label: "Integration Governance Tool"}, {type: "Conversation", label: "CEO – Setting Expectations"}, {type: "UserInput", label: "Day 1 Communication Plan"}]}, {title: "Week 2: Cultural Collision", subtitle: "Navigate cultural conflicts", objective: "Address tensions before they derail integration", duration: 25, blocks: [{type: "Resource", label: "Employee Pulse Survey Results"}, {type: "MultiConversation", label: "Cross-Company Leadership Team"}, {type: "Custom", label: "Cultural Conflict Map"}, {type: "UserInput", label: "Cultural Integration Strategy"}]}, {title: "Month 2: Synergy Pressure", subtitle: "Hit synergy targets under time pressure", objective: "Balance quick wins with sustainable integration", duration: 25, blocks: [{type: "Resource", label: "Synergy Dashboard (Month 2)"}, {type: "Conversation", label: "CFO – Synergy Expectations"}, {type: "Conversation", label: "CHRO – People Impact"}, {type: "UserInput", label: "Synergy Action Plan"}]}, {title: "Day 100: The Review", subtitle: "Present integration results", objective: "Deliver honest assessment and forward plan", duration: 20, blocks: [{type: "Custom", label: "100-Day Scorecard"}, {type: "MultiConversation", label: "Board Integration Review"}]}]}, {id: 7, title: "The Innovation Pipeline", pillar: "cf", level: "experienced", archetype: "mini-sim", hook: "Your innovation lab has 47 active projects and zero launches this year. The board wants results; your teams want freedom. Something has to give.", competencies: ["Manage innovation pipeline across teams", "Balance incremental vs breakthrough innovation", "Navigate cross-functional resource tensions"], mindsets: ["Innovation requires discipline and freedom", "Kill fast, fund winners", "Cross-functional friction is a feature"], tools: ["Innovation Funnel Dashboard", "Stage-Gate Review Process", "Innovation Portfolio Matrix"], aha: "The best innovation pipeline isn't the one with the most ideas—it's the one that kills the most ideas fast and backs the survivors with real resources.", chapters: [{title: "The Pipeline Review", subtitle: "Assess innovation portfolio", objective: "Map innovation investments across horizon and function", duration: 20, blocks: [{type: "Resource", label: "InnovateCo Pipeline Brief"}, {type: "Resource", label: "Innovation Portfolio Data"}, {type: "Custom", label: "Innovation Funnel Dashboard"}, {type: "Conversation", label: "CTO – Innovation Vision"}, {type: "UserInput", label: "Pipeline Assessment"}]}, {title: "Stage-Gate Decision", subtitle: "Run stage-gate review of 5 projects", objective: "Make go/kill/pivot decisions under pressure", duration: 25, blocks: [{type: "Resource", label: "5 Project Proposals"}, {type: "MultiConversation", label: "Stage-Gate Review Panel"}, {type: "Custom", label: "Project Scoring Tool"}, {type: "UserInput", label: "Stage-Gate Decisions"}]}, {title: "Resource Allocation Fight", subtitle: "Allocate limited resources", objective: "Navigate cross-functional resource competition", duration: 25, blocks: [{type: "MultiConversation", label: "Cross-Functional Resource Battle"}, {type: "Custom", label: "Resource Allocation Modeler"}, {type: "UserInput", label: "Final Allocation Decision"}]}, {title: "Innovation Roadmap", subtitle: "Present the innovation strategy", objective: "Communicate coherent innovation roadmap", duration: 15, blocks: [{type: "Custom", label: "Roadmap Presentation Builder"}, {type: "Conversation", label: "CEO – Innovation Strategy Review"}]}]}, {id: 8, title: "The Customer Crisis", pillar: "cf", level: "rising", archetype: "mini-sim", hook: "Your biggest client's CEO just posted a scathing review of your product on LinkedIn—and it's going viral. Three departments are pointing fingers at each other while the clock ticks.", competencies: ["Coordinate rapid cross-functional response", "Manage internal communication under pressure", "Balance short-term crisis with long-term repair"], mindsets: ["Speed of response signals care", "Cross-functional alignment reveals org health", "Every crisis is a trust test"], tools: ["Crisis Response Protocol", "Stakeholder Communication Matrix", "Root Cause Analysis Framework"], aha: "A customer crisis isn't about the product that failed—it's about the trust that was broken. Your response speed IS your product.", chapters: [{title: "The Alert", subtitle: "Major customer reports critical failure", objective: "Assess crisis and mobilize response", duration: 15, blocks: [{type: "Resource", label: "Urgent Customer Alert"}, {type: "Resource", label: "Customer Account History"}, {type: "Conversation", label: "Account Manager – Initial Briefing"}, {type: "UserInput", label: "Initial Response Plan"}]}, {title: "Cross-Functional War Room", subtitle: "Coordinate response across teams", objective: "Align engineering, sales, support, leadership", duration: 25, blocks: [{type: "MultiConversation", label: "War Room: Engineering + Sales + Support"}, {type: "Custom", label: "Crisis Timeline Tracker"}, {type: "UserInput", label: "Coordinated Response Plan"}]}, {title: "The Customer Call", subtitle: "Communicate with customer directly", objective: "Rebuild trust through transparency", duration: 20, blocks: [{type: "Conversation", label: "Customer CEO – Direct Call"}, {type: "UserInput", label: "Customer Recovery Plan"}]}, {title: "Post-Crisis Review", subtitle: "Extract lessons and prevent recurrence", objective: "Build systemic improvements", duration: 15, blocks: [{type: "Resource", label: "Crisis Resolution Summary"}, {type: "Custom", label: "Root Cause Analysis Tool"}, {type: "UserInput", label: "Prevention Protocol"}]}]}, {id: 9, title: "The Stakeholder Map", pillar: "cf", level: "rising", archetype: "mini-sim", hook: "You just joined a cross-functional task force where everyone outranks you, and nobody agrees on priorities. Your boss says this is your chance to 'show leadership without authority.'", competencies: ["Map and prioritize stakeholders", "Build influence without authority", "Navigate political dynamics"], mindsets: ["Influence is earned not demanded", "Every stakeholder has a currency", "Understanding before persuasion"], tools: ["Stakeholder Mapping Canvas", "Influence Strategy Toolkit", "RACI Matrix"], aha: "The org chart tells you who reports to whom. The stakeholder map tells you who actually makes decisions—and those are rarely the same people.", chapters: [{title: "The Project", subtitle: "Take on cross-functional initiative", objective: "Understand cross-functional landscape", duration: 15, blocks: [{type: "Resource", label: "Project Brief – Digital Transformation"}, {type: "Resource", label: "Org Chart const cases = [/* CASES_DATA_PLACEHOLDER */]; Team Profiles"}, {type: "Custom", label: "Stakeholder Mapping Tool"}, {type: "UserInput", label: "Initial Stakeholder Map"}]}, {title: "Reading the Room", subtitle: "Understand stakeholder motivations", objective: "Discover what each stakeholder needs", duration: 25, blocks: [{type: "Conversation", label: "VP Engineering – Technical Concerns"}, {type: "Conversation", label: "VP Sales – Revenue Impact"}, {type: "Conversation", label: "CHRO – Change Management"}, {type: "UserInput", label: "Stakeholder Motivation Map"}]}, {title: "Building Coalitions", subtitle: "Create alignment across functions", objective: "Build support through strategic influence", duration: 25, blocks: [{type: "Custom", label: "Influence Strategy Builder"}, {type: "Conversation", label: "Key Resistor – VP Operations"}, {type: "UserInput", label: "Coalition Building Plan"}]}, {title: "The Alignment Meeting", subtitle: "Drive cross-functional commitment", objective: "Facilitate meeting producing genuine alignment", duration: 20, blocks: [{type: "MultiConversation", label: "Cross-Functional Alignment Meeting"}, {type: "UserInput", label: "Alignment Summary const cases = [/* CASES_DATA_PLACEHOLDER */]; Next Steps"}]}]}, {id: 10, title: "The Supply Chain Shock", pillar: "cf", level: "experienced", archetype: "mini-sim", hook: "A critical shipment from your sole-source supplier just got stuck at a port 6,000 miles away. Operations, finance, and legal all have different ideas about what to do next—and your customers don't care whose fault it is.", competencies: ["Manage supply chain disruptions cross-functionally", "Balance cost, speed, quality trade-offs", "Communicate disruption impact to stakeholders"], mindsets: ["Resilience built before crisis", "Supply chain is everyone's problem when it breaks", "Trade-offs are real — optimize don't pretend"], tools: ["Supply Chain Risk Assessment", "Disruption Impact Model", "Alternative Sourcing Matrix"], aha: "Your supply chain is perfectly optimized—for the last crisis. The next disruption will come from somewhere you didn't model.", chapters: [{title: "The Disruption", subtitle: "Critical supplier goes offline", objective: "Assess impact and mobilize response", duration: 15, blocks: [{type: "Resource", label: "Supplier Disruption Alert"}, {type: "Resource", label: "Supply Chain Dependencies Map"}, {type: "Conversation", label: "VP Supply Chain – Briefing"}, {type: "UserInput", label: "Impact Assessment"}]}, {title: "The Trade-offs", subtitle: "Navigate cost, speed, quality trade-offs", objective: "Make rapid sourcing decisions under constraint", duration: 25, blocks: [{type: "Resource", label: "Alternative Supplier Options"}, {type: "Custom", label: "Trade-off Modeler"}, {type: "MultiConversation", label: "Cross-Functional Trade-off Discussion"}, {type: "UserInput", label: "Sourcing Decision"}]}, {title: "Customer Communication", subtitle: "Manage customer expectations", objective: "Communicate disruption with transparency", duration: 20, blocks: [{type: "Conversation", label: "Key Customer – Delivery Update"}, {type: "Conversation", label: "Sales VP – Revenue Impact"}, {type: "UserInput", label: "Customer Communication Plan"}]}, {title: "Build Resilience", subtitle: "Redesign for future disruption", objective: "Create supply chain resilience strategy", duration: 15, blocks: [{type: "Custom", label: "Resilience Assessment Tool"}, {type: "UserInput", label: "Supply Chain Resilience Plan"}]}]}, {id: 11, title: "The New Manager", pillar: "tm", level: "rising", archetype: "mini-sim", hook: "Yesterday you were the team's top performer. Today you're their boss. The person who used to sit next to you just asked if they can still vent about management—to you.", competencies: ["Transition from IC to people manager", "Set expectations and build trust", "Navigate new-manager pitfalls"], mindsets: ["Your job is to enable others", "Trust built in small moments", "Ask before you tell"], tools: ["First 90 Days Plan", "One-on-One Framework", "Delegation Matrix"], aha: "The hardest part of becoming a manager isn't learning new skills—it's unlearning the habits that made you a great individual contributor.", chapters: [{title: "Day One", subtitle: "Meet your team and set the tone", objective: "Navigate first impressions", duration: 15, blocks: [{type: "Resource", label: "Your New Team Profile"}, {type: "Resource", label: "Manager Transition Brief"}, {type: "Conversation", label: "Your Boss – Setting Expectations"}, {type: "UserInput", label: "First Week Plan"}]}, {title: "Building Trust", subtitle: "Run your first one-on-ones", objective: "Build individual relationships", duration: 25, blocks: [{type: "Conversation", label: "Team Member 1 – High Performer"}, {type: "Conversation", label: "Team Member 2 – Struggling"}, {type: "Conversation", label: "Team Member 3 – Skeptical Veteran"}, {type: "UserInput", label: "Team Assessment const cases = [/* CASES_DATA_PLACEHOLDER */]; Approach"}]}, {title: "The First Challenge", subtitle: "Navigate first management decision", objective: "Make a difficult team decision", duration: 25, blocks: [{type: "Resource", label: "The Situation: Resource Conflict"}, {type: "Conversation", label: "Peer Manager – Competing Priority"}, {type: "MultiConversation", label: "Team Meeting: Announcing Decision"}, {type: "UserInput", label: "Decision Reflection"}]}, {title: "90-Day Review", subtitle: "Assess management impact", objective: "Reflect and plan forward", duration: 15, blocks: [{type: "Resource", label: "Team Feedback Summary"}, {type: "Custom", label: "Self-Assessment Tool"}, {type: "UserInput", label: "90-Day Review const cases = [/* CASES_DATA_PLACEHOLDER */]; Growth Plan"}]}]}, {id: 12, title: "The Performance Conversation", pillar: "tm", level: "rising", archetype: "mini-sim", hook: "Your top performer's work has quietly declined for three months, and everyone on the team has noticed. The conversation you've been avoiding is now the conversation you can't afford to skip.", competencies: ["Deliver difficult feedback constructively", "Navigate emotional reactions", "Create actionable development plans"], mindsets: ["Feedback is a gift when specific", "The conversation IS the intervention", "Be direct and kind"], tools: ["SBI Feedback Model", "Performance Conversation Guide", "Development Plan Template"], aha: "Delaying hard feedback isn't kindness—it's cowardice dressed up as empathy. The most caring thing is to tell the truth while they can still act on it.", chapters: [{title: "The Setup", subtitle: "Prepare for difficult conversation", objective: "Gather data and plan approach", duration: 15, blocks: [{type: "Resource", label: "Employee Performance File"}, {type: "Resource", label: "Recent Project Feedback"}, {type: "Custom", label: "SBI Feedback Planner"}, {type: "UserInput", label: "Conversation Plan"}]}, {title: "The Conversation", subtitle: "Deliver the feedback", objective: "Have direct, caring, productive conversation", duration: 25, blocks: [{type: "Conversation", label: "Jordan Rivera – Underperforming Employee"}, {type: "UserInput", label: "Conversation Reflection"}]}, {title: "The Emotional Aftermath", subtitle: "Handle emotional response", objective: "Navigate defensiveness with empathy", duration: 20, blocks: [{type: "Resource", label: "Emotional Reactions Guide"}, {type: "Conversation", label: "Jordan Rivera – Follow-Up"}, {type: "UserInput", label: "Emotional Support Plan"}]}, {title: "The Development Plan", subtitle: "Create path forward", objective: "Build actionable development plan", duration: 20, blocks: [{type: "Custom", label: "Development Plan Builder"}, {type: "Conversation", label: "Jordan Rivera – Co-Creating Plan"}, {type: "UserInput", label: "Final Development Plan"}]}]}, {id: 13, title: "The Remote Team Puzzle", pillar: "tm", level: "experienced", archetype: "mini-sim", hook: "Half your team is in Singapore, the other half in Chicago, and they've started referring to each other as 'them.' The last all-hands had four people with cameras off and one person clearly multitasking.", competencies: ["Build cohesion in distributed teams", "Design async/hybrid communication", "Maintain culture remotely"], mindsets: ["Presence ≠ Productivity", "Intentional communication replaces osmosis", "Trust is remote work's OS"], tools: ["Remote Team Operating Manual", "Communication Protocol Design", "Virtual Engagement Toolkit"], aha: "Remote work doesn't break teams—it reveals which teams were already broken. If your culture only works in-person, it wasn't culture; it was proximity.", chapters: [{title: "The Diagnosis", subtitle: "Assess distributed team health", objective: "Identify communication gaps", duration: 15, blocks: [{type: "Resource", label: "Team Survey Results"}, {type: "Resource", label: "Communication Patterns Analysis"}, {type: "Custom", label: "Team Health Dashboard"}, {type: "UserInput", label: "Team Health Assessment"}]}, {title: "Redesign Communication", subtitle: "Build intentional communication", objective: "Create protocols replacing organic interactions", duration: 25, blocks: [{type: "Resource", label: "Communication Best Practices"}, {type: "Conversation", label: "Remote Team Member – Timezone Challenge"}, {type: "Conversation", label: "Hybrid Team Member – Inclusion Concerns"}, {type: "UserInput", label: "Communication Protocol Design"}]}, {title: "Build Virtual Culture", subtitle: "Create belonging without co-location", objective: "Design rituals building cohesion remotely", duration: 25, blocks: [{type: "Custom", label: "Virtual Culture Designer"}, {type: "MultiConversation", label: "Team Culture Workshop"}, {type: "UserInput", label: "Virtual Culture Playbook"}]}, {title: "Sustain const cases = [/* CASES_DATA_PLACEHOLDER */]; Scale", subtitle: "Make remote excellence sustainable", objective: "Build sustaining systems", duration: 15, blocks: [{type: "Resource", label: "6-Month Check-In Data"}, {type: "Conversation", label: "HR Partner – Remote Best Practices"}, {type: "UserInput", label: "Remote Excellence Sustainability Plan"}]}]}, {id: 14, title: "The Succession Plan", pillar: "tm", level: "executive", archetype: "mini-sim", hook: "The CEO just asked who could run your division if you got hit by a bus tomorrow. The honest answer is: nobody. And you've known that for a year.", competencies: ["Identify and develop successors", "Build bench strength", "Navigate succession politics"], mindsets: ["Make yourself replaceable", "Succession is continuous", "Development means discomfort"], tools: ["9-Box Talent Grid", "Succession Pipeline Map", "Development Assignment Framework"], aha: "If you haven't developed someone who can replace you, you haven't really led—you've just occupied a chair.", chapters: [{title: "The Talent Audit", subtitle: "Assess leadership pipeline", objective: "Map talent against future needs", duration: 20, blocks: [{type: "Resource", label: "Organizational Growth Plan"}, {type: "Resource", label: "Leadership Team Profiles"}, {type: "Custom", label: "9-Box Talent Grid Tool"}, {type: "Conversation", label: "CHRO – Talent Philosophy"}, {type: "UserInput", label: "Talent Pipeline Assessment"}]}, {title: "Development Design", subtitle: "Create stretch assignments", objective: "Design accelerating experiences", duration: 25, blocks: [{type: "Resource", label: "High-Potential Profiles"}, {type: "Conversation", label: "High-Potential 1 – Aspirations"}, {type: "Conversation", label: "High-Potential 2 – Development Needs"}, {type: "Custom", label: "Development Assignment Designer"}, {type: "UserInput", label: "Development Plans"}]}, {title: "The Politics", subtitle: "Navigate succession politics", objective: "Manage expectations", duration: 25, blocks: [{type: "Conversation", label: "Passed-Over Executive – Difficult Conversation"}, {type: "Conversation", label: "Board Member – Succession Concerns"}, {type: "UserInput", label: "Succession Communication Plan"}]}, {title: "The Transition", subtitle: "Execute leadership transition", objective: "Manage actual handoff", duration: 20, blocks: [{type: "MultiConversation", label: "Leadership Transition Meeting"}, {type: "UserInput", label: "Transition Playbook"}]}]}, {id: 15, title: "The Culture Reset", pillar: "tm", level: "executive", archetype: "mini-sim", hook: "Three people quit your department last month and the exit interviews all said the same thing—but nobody in leadership wants to hear it. You've been asked to 'fix morale' without changing anything that broke it.", competencies: ["Diagnose toxic culture", "Design culture transformation", "Measure culture change"], mindsets: ["Culture is what happens when no one watches", "Can't mandate culture — model it", "Culture change needs systems and stories"], tools: ["Culture Diagnostic Survey", "Values-to-Behaviors Translation Tool", "Culture Change Roadmap"], aha: "Culture isn't what's on the wall — it's what's tolerated in the hallway. To change culture, change what you celebrate and what you confront.", chapters: [{title: "The Diagnosis", subtitle: "Uncover the real culture", objective: "Distinguish stated vs lived values", duration: 20, blocks: [{type: "Resource", label: "Culture Survey Results"}, {type: "Resource", label: "Exit Interview Themes"}, {type: "Custom", label: "Culture Gap Analyzer"}, {type: "Conversation", label: "Anonymous Employee Voice"}, {type: "UserInput", label: "Culture Diagnosis Report"}]}, {title: "The Blueprint", subtitle: "Design target culture", objective: "Define new culture in daily behaviors", duration: 25, blocks: [{type: "Resource", label: "Culture Transformation Examples"}, {type: "Custom", label: "Values-to-Behaviors Translator"}, {type: "Conversation", label: "CHRO – Culture Strategy"}, {type: "UserInput", label: "Culture Blueprint"}]}, {title: "The Resistance", subtitle: "Navigate pushback from culture carriers", objective: "Address resistance from old-culture beneficiaries", duration: 25, blocks: [{type: "Conversation", label: "Senior Leader – Old Guard"}, {type: "Conversation", label: "Mid-Level Manager – Caught in Middle"}, {type: "MultiConversation", label: "Culture Town Hall"}, {type: "UserInput", label: "Resistance Strategy"}]}, {title: "Sustain the Change", subtitle: "Build reinforcing systems", objective: "Create accountability for sustainability", duration: 20, blocks: [{type: "Custom", label: "Culture Reinforcement System"}, {type: "UserInput", label: "Culture Sustainability Plan"}]}]}, {id: 16, title: "The High-Potential Dilemma", pillar: "ts", level: "experienced", archetype: "mini-sim", hook: "HR's annual talent review flagged two names as high-potential—but the person doing the most innovative work in your org wasn't on the list. You suspect the system is measuring the wrong things.", competencies: ["Identify HP talent beyond metrics", "Navigate potential assessment vs bias", "Design equitable identification"], mindsets: ["High performance ≠ high potential", "Potential is context-dependent", "Bias hides in gut feel"], tools: ["Potential Assessment Framework", "Bias-Aware Selection Rubric", "HP Development Matrix"], aha: "We consistently confuse confidence with competence and visibility with value. The highest-potential people are often the ones you haven't noticed yet.", chapters: [{title: "The Nomination", subtitle: "Review HP slate", objective: "Evaluate nomination process for blind spots", duration: 15, blocks: [{type: "Resource", label: "Annual Talent Review Brief"}, {type: "Resource", label: "HP Nominee Profiles"}, {type: "Custom", label: "Nomination Pattern Analyzer"}, {type: "Conversation", label: "HR Business Partner"}, {type: "UserInput", label: "Process Critique"}]}, {title: "Looking Deeper", subtitle: "Expand the aperture", objective: "Find potential in unexpected places", duration: 25, blocks: [{type: "Resource", label: "Hidden Talent Profiles"}, {type: "Custom", label: "Potential Assessment Tool"}, {type: "Conversation", label: "Manager 1 – Advocating Star"}, {type: "Conversation", label: "Manager 2 – Overlooking Quiet Talent"}, {type: "UserInput", label: "Expanded HP Slate"}]}, {title: "The Calibration", subtitle: "Navigate calibration politics", objective: "Lead fair calibration despite competing agendas", duration: 25, blocks: [{type: "MultiConversation", label: "Talent Calibration Session"}, {type: "UserInput", label: "Final HP Selections const cases = [/* CASES_DATA_PLACEHOLDER */]; Rationale"}]}, {title: "Communicate const cases = [/* CASES_DATA_PLACEHOLDER */]; Develop", subtitle: "Tell people where they stand", objective: "Communicate HP designation with care", duration: 20, blocks: [{type: "Conversation", label: "Selected HP – Setting Expectations"}, {type: "Conversation", label: "Not-Selected Performer – Honest Talk"}, {type: "UserInput", label: "HP Communication const cases = [/* CASES_DATA_PLACEHOLDER */]; Development Plan"}]}]}, {id: 17, title: "The Hiring Decision", pillar: "ts", level: "rising", archetype: "mini-sim", hook: "You need to fill a critical role in two weeks. The hiring manager loves Candidate A's energy; the data from structured interviews points clearly to Candidate B. Your tie-breaking vote is next.", competencies: ["Design structured interviews", "Evaluate candidates beyond resume", "Make bias-reducing hiring decisions"], mindsets: ["Hiring is most leveraged decision", "Structure beats intuition", "Diverse teams outperform"], tools: ["Structured Interview Guide", "Candidate Scoring Rubric", "Hiring Decision Matrix"], aha: "The biggest hiring mistakes aren't bad candidates—they're good interviewers who trust their gut instead of their data.", chapters: [{title: "Define the Role", subtitle: "Create role profile beyond JD", objective: "Articulate what success looks like", duration: 15, blocks: [{type: "Resource", label: "Position Request Brief"}, {type: "Custom", label: "Role Success Profile Builder"}, {type: "Conversation", label: "Hiring Manager – Requirements"}, {type: "UserInput", label: "Role Success Profile"}]}, {title: "Design the Process", subtitle: "Build structured interviews", objective: "Create process minimizing bias maximizing signal", duration: 20, blocks: [{type: "Resource", label: "Interview Design Best Practices"}, {type: "Custom", label: "Interview Structure Designer"}, {type: "Conversation", label: "Recruiter – Process Realities"}, {type: "UserInput", label: "Interview Structure"}]}, {title: "Evaluate Candidates", subtitle: "Score against criteria", objective: "Make evidence-based evaluations", duration: 25, blocks: [{type: "Resource", label: "Candidate Profiles (4)"}, {type: "Custom", label: "Candidate Scoring Tool"}, {type: "MultiConversation", label: "Interview Debrief Session"}, {type: "UserInput", label: "Rankings const cases = [/* CASES_DATA_PLACEHOLDER */]; Rationale"}]}, {title: "Make the Call", subtitle: "Navigate final decision", objective: "Make defensible decision under ambiguity", duration: 15, blocks: [{type: "Conversation", label: "Hiring Committee – Final Discussion"}, {type: "UserInput", label: "Hiring Decision const cases = [/* CASES_DATA_PLACEHOLDER */]; Justification"}]}]}, {id: 18, title: "The Diversity Imperative", pillar: "ts", level: "executive", archetype: "mini-sim", hook: "Your company's leadership team is 85% one demographic, and the board just asked what you're going to do about it. The obvious fixes have been tried. Something structural needs to change.", competencies: ["Design strategies increasing representation", "Navigate organizational resistance", "Measure diversity beyond headcount"], mindsets: ["Diversity without inclusion is decoration", "System is the pipeline", "Belonging > representation"], tools: ["Diversity Strategy Framework", "Inclusion Measurement Dashboard", "Systemic Barrier Assessment"], aha: "Companies don't have a pipeline problem—they have a culture problem disguised as a pipeline problem. Fix the culture and the pipeline fills itself.", chapters: [{title: "The Data", subtitle: "Assess representation reality", objective: "Understand the gap", duration: 15, blocks: [{type: "Resource", label: "Diversity Data Dashboard"}, {type: "Resource", label: "Employee Experience Survey"}, {type: "Custom", label: "Inclusion Gap Analyzer"}, {type: "Conversation", label: "Chief Diversity Officer"}, {type: "UserInput", label: "Diversity Reality Assessment"}]}, {title: "The Strategy", subtitle: "Design systemic strategy", objective: "Move beyond programs to systemic change", duration: 25, blocks: [{type: "Resource", label: "Best-in-Class Strategies"}, {type: "Custom", label: "Systemic Barrier Mapper"}, {type: "Conversation", label: "ERG Leader – Frontline Reality"}, {type: "UserInput", label: "Diversity Strategy Design"}]}, {title: "The Resistance", subtitle: "Navigate skepticism and backlash", objective: "Address resistance with data and empathy", duration: 25, blocks: [{type: "Conversation", label: "Senior Leader – Why This Matters"}, {type: "Conversation", label: "Skeptical Manager – Common Objections"}, {type: "MultiConversation", label: "Leadership Alignment Session"}, {type: "UserInput", label: "Resistance Management Plan"}]}, {title: "Measure const cases = [/* CASES_DATA_PLACEHOLDER */]; Sustain", subtitle: "Build accountability", objective: "Create measurement and accountability", duration: 20, blocks: [{type: "Custom", label: "Diversity Accountability Dashboard"}, {type: "UserInput", label: "Diversity Sustainability Plan"}]}]}, {id: 19, title: "The Retention Crisis", pillar: "ts", level: "experienced", archetype: "mini-sim", hook: "Your best engineer just accepted an offer for 15% less money at a smaller company. When you asked why, she said: 'They actually listen to people like me.' Now three more people are updating their LinkedIn profiles.", competencies: ["Diagnose attrition root causes", "Design retention beyond compensation", "Build stay interviews"], mindsets: ["People leave experiences not companies", "Retention starts day one", "Best retention is great development"], tools: ["Attrition Root Cause Analysis", "Stay Interview Framework", "Total Rewards Assessment"], aha: "By the time someone tells you they're leaving, they left months ago. Retention isn't a counter-offer—it's the daily experience of being valued.", chapters: [{title: "The Exit Flood", subtitle: "Analyze attrition spike", objective: "Diagnose why top performers leave", duration: 15, blocks: [{type: "Resource", label: "Attrition Data const cases = [/* CASES_DATA_PLACEHOLDER */]; Trends"}, {type: "Resource", label: "Exit Interview Summaries"}, {type: "Custom", label: "Attrition Pattern Analyzer"}, {type: "UserInput", label: "Root Cause Hypothesis"}]}, {title: "Stay Interviews", subtitle: "Have proactive retention conversations", objective: "Understand what keeps and pushes people", duration: 25, blocks: [{type: "Conversation", label: "HP 1 – Considering Leaving"}, {type: "Conversation", label: "HP 2 – Engaged but Restless"}, {type: "Conversation", label: "Mid-Performer – Quietly Checking Out"}, {type: "UserInput", label: "Stay Interview Insights"}]}, {title: "Retention Strategy", subtitle: "Design comprehensive approach", objective: "Create strategy beyond money", duration: 25, blocks: [{type: "Resource", label: "Competitive Compensation Analysis"}, {type: "Custom", label: "Retention Strategy Builder"}, {type: "Conversation", label: "CHRO – Retention Budget"}, {type: "UserInput", label: "Retention Strategy Proposal"}]}, {title: "Implementation", subtitle: "Roll out and track impact", objective: "Implement with clear metrics", duration: 15, blocks: [{type: "Custom", label: "Retention Dashboard Designer"}, {type: "UserInput", label: "Implementation Plan const cases = [/* CASES_DATA_PLACEHOLDER */]; KPIs"}]}]}, {id: 20, title: "The Onboarding Revolution", pillar: "ts", level: "rising", archetype: "mini-sim", hook: "New hires keep saying the same thing in their 90-day check-ins: 'Nobody told me how things actually work here.' Your onboarding program looks great on paper—but something is clearly missing.", competencies: ["Design onboarding accelerating time-to-productivity", "Build social integration with role training", "Measure onboarding beyond satisfaction"], mindsets: ["First impressions are two-way", "Onboarding is relationship-building", "First 90 days predict next 900"], tools: ["Onboarding Journey Map", "Time-to-Productivity Framework", "New Hire Experience Design"], aha: "Onboarding isn't HR paperwork—it's the first chapter of someone's story at your company. Write a good one, and they'll write the rest.", chapters: [{title: "The Current State", subtitle: "Audit existing onboarding", objective: "Identify gaps between aspiration and reality", duration: 15, blocks: [{type: "Resource", label: "Onboarding Survey Results"}, {type: "Resource", label: "Current Onboarding Schedule"}, {type: "Custom", label: "Onboarding Gap Analyzer"}, {type: "Conversation", label: "Recent New Hire – Honest Feedback"}, {type: "UserInput", label: "Onboarding Audit"}]}, {title: "Redesign the Journey", subtitle: "Create new onboarding experience", objective: "Design program accelerating belonging and productivity", duration: 25, blocks: [{type: "Resource", label: "Best Practice Examples"}, {type: "Custom", label: "Onboarding Journey Designer"}, {type: "Conversation", label: "Hiring Manager – What They Need"}, {type: "Conversation", label: "HR Partner – What's Feasible"}, {type: "UserInput", label: "New Program Design"}]}, {title: "Pilot and Iterate", subtitle: "Test new onboarding", objective: "Run pilot and gather feedback", duration: 20, blocks: [{type: "Conversation", label: "Pilot Cohort Member – Day 30 Check-In"}, {type: "Custom", label: "Onboarding Metrics Dashboard"}, {type: "UserInput", label: "Pilot Iteration Plan"}]}, {title: "Scale and Measure", subtitle: "Roll out and track impact", objective: "Build measurement systems", duration: 15, blocks: [{type: "Custom", label: "Time-to-Productivity Tracker"}, {type: "UserInput", label: "Onboarding Scale Plan const cases = [/* CASES_DATA_PLACEHOLDER */]; KPIs"}]}]}, {id: 21, title: "The Why Deficit", pillar: "ba", level: "rising", archetype: "ted-talk", tedTalk: "Simon Sinek – How Great Leaders Inspire Action", hook: "Simon Sinek argued that people don't buy what you do—they buy why you do it. Your product team just shipped a feature nobody asked for and killed one customers loved, and somewhere between strategy and execution, the 'why' got lost.", competencies: ["Articulate strategic purpose", "Connect vision to execution", "Inspire through clarity of purpose"], mindsets: ["Start with why", "Purpose drives behavior", "Clarity is contagious"], tools: ["Golden Circle Framework", "Purpose Statement Canvas", "Vision Cascade Map"], aha: "People don't buy what you do, they buy why you do it. Lead with purpose, not product.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Discover the Golden Circle", objective: "Understand the difference between What, How, and Why", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Start With Why"}, {type: "Conversation", label: "Maya Rodriguez – VP Product"}]}, {title: "Apply the Framework", subtitle: "Rebuild your product narrative", objective: "Articulate your organization's Why and align messaging", duration: 20, blocks: [{type: "Resource", label: "Company Mission Statement"}, {type: "UserInput", label: "Define Your Why"}, {type: "Conversation", label: "James Chen – Marketing Director"}]}, {title: "Navigate Resistance", subtitle: "The financial team questions your strategy", objective: "Defend Why-based positioning against skepticism", duration: 20, blocks: [{type: "Conversation", label: "Patricia Wong – CFO"}, {type: "UserInput", label: "Build Your Business Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Pitch new brand direction to leadership", objective: "Present integrated Why, How, What strategy", duration: 15, blocks: [{type: "UserInput", label: "Create Your Pitch Outline"}, {type: "MultiConversation", label: "Board Presentation Simulation"}]}]}, {id: 22, title: "Armor const cases = [/* CASES_DATA_PLACEHOLDER */]; Authenticity", pillar: "tm", level: "rising", archetype: "ted-talk", tedTalk: "Brené Brown – The Power of Vulnerability", hook: "Brené Brown told millions that vulnerability isn't weakness—it's the birthplace of leadership. Your newest director gives flawless presentations and never shows doubt, but your most effective director freely admits what she doesn't know—and her team would walk through fire for her.", competencies: ["Lead with vulnerability", "Build psychological safety", "Create connection through authenticity"], mindsets: ["Vulnerability is strength", "Dare greatly", "Connection over perfection"], tools: ["Vulnerability Mapping", "Trust-Building Exercises", "Authenticity Assessment"], aha: "Leaders who show up whole unlock psychological safety in others.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Confront what vulnerability really means", objective: "Distinguish fake niceness from genuine vulnerability", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – The Power of Vulnerability"}, {type: "Conversation", label: "Dr. Alex Foster – Team Coach"}]}, {title: "Apply the Framework", subtitle: "Share your real story with your team", objective: "Practice a moment of strategic vulnerability", duration: 20, blocks: [{type: "UserInput", label: "Your Story: Failure const cases = [/* CASES_DATA_PLACEHOLDER */]; Learning"}, {type: "Conversation", label: "Sarah Kim – Direct Report"}]}, {title: "Navigate Resistance", subtitle: "Your team questions if you're still strong", objective: "Maintain authority while being vulnerable", duration: 20, blocks: [{type: "Conversation", label: "Marcus Johnson – Senior Engineer"}, {type: "UserInput", label: "Respond to Team Concerns"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch a culture of psychological safety", objective: "Create rituals normalizing vulnerability", duration: 15, blocks: [{type: "UserInput", label: "Design Culture Intervention"}, {type: "Conversation", label: "HR Partner – Implementation Planning"}]}]}, {id: 23, title: "The Posture of Power", pillar: "ts", level: "experienced", archetype: "ted-talk", tedTalk: "Amy Cuddy – Your Body Language May Shape Who You Are", hook: "Amy Cuddy's research showed that your body language doesn't just reflect your confidence—it shapes it. A brilliant analyst keeps getting passed over for promotion while less qualified peers advance, and the feedback is always vague: 'Not quite ready.'", competencies: ["Project executive presence", "Master nonverbal communication", "Embody confidence"], mindsets: ["Embodied leadership", "Presence shapes confidence", "Body and mind are connected"], tools: ["Power Posing Techniques", "Presence Audit", "Body Language Coaching"], aha: "Your body doesn't just express your mind—it shapes it.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "The science of power posing", objective: "Understand somatic foundations of confidence", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Body Language"}, {type: "Conversation", label: "Dr. Nora Patel – Executive Coach"}]}, {title: "Apply the Framework", subtitle: "Transform your presence before the board", objective: "Apply embodied leadership to high-stakes situation", duration: 20, blocks: [{type: "Resource", label: "Board Meeting Agenda"}, {type: "UserInput", label: "Your Pre-Meeting Ritual"}, {type: "Conversation", label: "Thomas Wright – Board Member"}]}, {title: "Navigate Resistance", subtitle: "A colleague mocks your techniques", objective: "Defend embodied practices as legitimate", duration: 20, blocks: [{type: "Conversation", label: "Rebecca Stone – EVP Operations"}, {type: "UserInput", label: "Build Your Argument"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Coach your leadership team on presence", objective: "Teach embodied leadership to peers", duration: 15, blocks: [{type: "UserInput", label: "Design Your Coaching Approach"}, {type: "Conversation", label: "Executive Team Workshop"}]}]}, {id: 24, title: "Unlocking the Quiet Genius", pillar: "tm", level: "rising", archetype: "ted-talk", tedTalk: "Susan Cain – The Power of Introverts", hook: "Susan Cain made the case that the world is designed for extroverts—and we're losing genius because of it. Your brainstorming sessions are dominated by the same three voices, and the best idea last quarter came from someone who almost didn't speak up.", competencies: ["Leverage diverse thinking styles", "Avoid groupthink", "Create space for quiet voices"], mindsets: ["Anti-bias", "Diversity of personality", "Quiet excellence matters"], tools: ["Personality Style Assessment", "Meeting Design for Inclusion", "Quiet Genius Framework"], aha: "We lose genius by treating introversion as a flaw.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Introversion is not shyness", objective: "Challenge cultural bias toward extroversion", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – The Power of Introverts"}, {type: "Conversation", label: "Emma Scott – HR Business Partner"}]}, {title: "Apply the Framework", subtitle: "Redesign meetings for all voices", objective: "Create structures surfacing introverted genius", duration: 20, blocks: [{type: "Resource", label: "Current Meeting Norms"}, {type: "UserInput", label: "Design Inclusive Meetings"}, {type: "Conversation", label: "David Liu – Team Member"}]}, {title: "Navigate Resistance", subtitle: "Extroverted peers resist slower meetings", objective: "Build coalition for inclusive design", duration: 20, blocks: [{type: "Conversation", label: "Jessica Patel – Energetic Teammate"}, {type: "UserInput", label: "Address Concerns"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Present new team working norms", objective: "Launch changes honoring diverse styles", duration: 15, blocks: [{type: "UserInput", label: "Create Your Team Charter"}, {type: "Conversation", label: "Full Team Meeting Simulation"}]}]}, {id: 25, title: "Autonomy or Bust", pillar: "ts", level: "rising", archetype: "ted-talk", tedTalk: "Dan Pink – The Puzzle of Motivation", hook: "Dan Pink's research revealed that traditional rewards actually undermine the creative work that drives modern business. Your company just rolled out a generous new bonus structure—and productivity dropped. The incentives were designed perfectly on paper; somehow they're backfiring in practice.", competencies: ["Drive intrinsic motivation", "Design autonomy into work", "Move beyond carrots and sticks"], mindsets: ["Mastery, purpose, autonomy", "Intrinsic > extrinsic", "Creativity needs freedom"], tools: ["Motivation Audit", "Autonomy Design Framework", "Purpose-Mastery Map"], aha: "Carrot-stick management breaks down when work needs creativity.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "The science of motivation", objective: "Understand autonomy, mastery, and purpose", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – The Puzzle of Motivation"}, {type: "Conversation", label: "Dr. Nathan Brooks – Organizational Psychologist"}]}, {title: "Apply the Framework", subtitle: "Redesign team incentive structure", objective: "Shift from compliance to intrinsic motivation", duration: 20, blocks: [{type: "Resource", label: "Current Compensation const cases = [/* CASES_DATA_PLACEHOLDER */]; Goals"}, {type: "UserInput", label: "Design New Motivation System"}, {type: "Conversation", label: "Yuki Tanaka – Team Member"}]}, {title: "Navigate Resistance", subtitle: "Finance questions absence of hard metrics", objective: "Defend intrinsic motivation frameworks", duration: 20, blocks: [{type: "Conversation", label: "Robert Hayes – Finance Director"}, {type: "UserInput", label: "Build Your Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Roll out new approach company-wide", objective: "Present autonomy, mastery, purpose strategy", duration: 15, blocks: [{type: "UserInput", label: "Create Implementation Plan"}, {type: "Conversation", label: "Leadership Team Presentation"}]}]}, {id: 26, title: "Original Instincts", pillar: "ts", level: "experienced", archetype: "ted-talk", tedTalk: "Adam Grant – The Surprising Habits of Original Thinkers", hook: "Adam Grant discovered that original thinkers aren't fearless visionaries—they're doubters who act anyway. Your team hasn't proposed a genuinely new idea in over a year, and the 'innovation workshop' you ran last month produced nothing but recycled concepts. The creativity isn't gone—it's hiding.", competencies: ["Foster original thinking", "Manage innovation risk", "Encourage productive failure"], mindsets: ["Originals move despite doubt", "Creative courage", "Procrastination can fuel creativity"], tools: ["Innovation Confidence Builder", "Risk-Taking Framework", "Idea Generation Protocol"], aha: "Originals are not fearless—they move forward despite doubt.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "The paradox of procrastination and originality", objective: "Understand how originals think differently", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Original Thinkers"}, {type: "Conversation", label: "Lauren Chen – Chief Innovation Officer"}]}, {title: "Apply the Framework", subtitle: "Evaluate a radical business opportunity", objective: "Apply original thinking to strategic decision", duration: 20, blocks: [{type: "Resource", label: "Opportunity Assessment Brief"}, {type: "UserInput", label: "Analyze const cases = [/* CASES_DATA_PLACEHOLDER */]; Recommend"}, {type: "Conversation", label: "Marcus Reid – BU Leader"}]}, {title: "Navigate Resistance", subtitle: "Board is risk-averse; you propose moonshots", objective: "Navigate conservative stakeholders", duration: 20, blocks: [{type: "Conversation", label: "Patricia Lawrence – Board Chair"}, {type: "UserInput", label: "Craft Your Approach"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch innovation initiative", objective: "Build sustainable culture of original thinking", duration: 15, blocks: [{type: "UserInput", label: "Innovation Program Design"}, {type: "Conversation", label: "Stakeholder Buy-In Meeting"}]}]}, {id: 27, title: "Productive Friction", pillar: "cf", level: "experienced", archetype: "ted-talk", tedTalk: "Margaret Heffernan – Dare to Disagree", hook: "Margaret Heffernan argued that the best teams don't avoid conflict—they get exceptionally good at it. Two department heads haven't spoken directly in six weeks, and their teams are routing everything through you. The project is on schedule, but you can feel the fracture lines spreading.", competencies: ["Foster healthy dissent", "Create psychological safety for disagreement", "Build debate structures"], mindsets: ["Brave disagreement", "Conflict builds better decisions", "Silence kills innovation"], tools: ["Structured Debate Protocol", "Psychological Safety Audit", "Dissent Framework"], aha: "Teams that achieved most weren't agreeable—they argued well.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Why disagreement is a sign of health", objective: "Reframe conflict as creative force", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Dare to Disagree"}, {type: "Conversation", label: "Dr. Kenji Yamamoto – Team Dynamics Coach"}]}, {title: "Apply the Framework", subtitle: "Navigate a critical strategic disagreement", objective: "Surface best ideas through structured debate", duration: 20, blocks: [{type: "Resource", label: "Strategic Decision Brief"}, {type: "UserInput", label: "Map Stakeholder Positions"}, {type: "Conversation", label: "Alex Morrison – Head of Product"}]}, {title: "Navigate Resistance", subtitle: "Direct reports fear speaking up", objective: "Build culture where disagreement feels safe", duration: 20, blocks: [{type: "Conversation", label: "Sophie Bernard – Cautious Team Member"}, {type: "UserInput", label: "Create Safety Protocol"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Implement structured debate", objective: "Establish debate rituals improving decisions", duration: 15, blocks: [{type: "UserInput", label: "Design Debate Framework"}, {type: "Conversation", label: "Team Workshop Simulation"}]}]}, {id: 28, title: "The Making of Great Leaders", pillar: "ts", level: "executive", archetype: "ted-talk", tedTalk: "Roselinde Torres – What It Takes to Be a Great Leader", hook: "Roselinde Torres spent 25 years studying leadership and concluded that most development programs are preparing leaders for a world that no longer exists. You've led three successful transformations in five years, and the board just handed you the biggest one yet—but this time the old playbook feels dangerously outdated.", competencies: ["Lead strategic transformations", "Reinvent yourself continuously", "Question assumptions"], mindsets: ["Continuous reinvention", "Beginner's mind", "Comfort with uncertainty"], tools: ["Leadership Evolution Map", "Assumption Audit", "Reinvention Framework"], aha: "Great leaders continually reinvent themselves.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Three elements of great leadership", objective: "Evaluate yourself against leadership criteria", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Great Leaders"}, {type: "Conversation", label: "Victoria Chen – Executive Coach"}]}, {title: "Apply the Framework", subtitle: "Assess your leadership for next era", objective: "Identify gaps and design reinvention", duration: 25, blocks: [{type: "Resource", label: "360 Feedback Summary"}, {type: "UserInput", label: "Self-Assessment const cases = [/* CASES_DATA_PLACEHOLDER */]; Development Plan"}, {type: "Conversation", label: "Michael Torres – Board Advisor"}]}, {title: "Navigate Resistance", subtitle: "Organization resists your transformation", objective: "Lead change in culture and strategy", duration: 20, blocks: [{type: "Conversation", label: "James Williams – Skeptical Executive"}, {type: "UserInput", label: "Change Strategy"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Articulate your legacy and vision", objective: "Communicate reinvented leadership direction", duration: 15, blocks: [{type: "UserInput", label: "Leadership Narrative"}, {type: "Conversation", label: "Board const cases = [/* CASES_DATA_PLACEHOLDER */]; Leadership Presentation"}]}]}, {id: 29, title: "Learning at the Helm", pillar: "tm", level: "experienced", archetype: "ted-talk", tedTalk: "Stanley McChrystal – Listen, Learn... Then Lead", hook: "General Stanley McChrystal commanded the most elite military units on earth and learned that the higher you rise, the less you understand—unless you relentlessly listen. You just took command of a struggling division, and halfway through your opening remarks, you realize nobody in the room believes a word you're saying yet.", competencies: ["Practice relentless listening", "Build shared consciousness", "Lead through questions"], mindsets: ["Intellectual humility", "More senior = less you understand", "Listening is leadership"], tools: ["Listening Audit", "Question Design Framework", "Shared Consciousness Protocol"], aha: "More senior, less you understand—unless you relentlessly listen.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Why listening is foundation of command", objective: "Understand listening as strategic practice", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Listen, Learn, Lead"}, {type: "Conversation", label: "General Adeyemi – Retired Military Leader"}]}, {title: "Apply the Framework", subtitle: "Launch a listening tour", objective: "Design and execute systematic listening", duration: 20, blocks: [{type: "Resource", label: "Organization Overview"}, {type: "UserInput", label: "Listening Tour Plan"}, {type: "Conversation", label: "Jennifer Wu – Ground-Level Manager"}]}, {title: "Navigate Resistance", subtitle: "Team questions your motives", objective: "Build trust through genuine listening", duration: 20, blocks: [{type: "Conversation", label: "Robert Jackson – Cynical Employee"}, {type: "UserInput", label: "Listening Response Protocol"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Synthesize learnings into strategy", objective: "Transform listening into direction", duration: 15, blocks: [{type: "UserInput", label: "Insights const cases = [/* CASES_DATA_PLACEHOLDER */]; Strategic Implications"}, {type: "Conversation", label: "Leadership Town Hall"}]}]}, {id: 30, title: "The Conductor's Baton", pillar: "tm", level: "experienced", archetype: "ted-talk", tedTalk: "Itay Talgam – Lead Like the Great Conductors", hook: "Itay Talgam studied the world's great conductors and found that the best ones create space for the orchestra to lead itself. Your project team has twelve talented individuals and zero coordination—everyone's working hard, just not on the same thing, and not in the same direction.", competencies: ["Orchestrate team excellence", "Enable others to shine", "Conduct without controlling"], mindsets: ["Ensemble thinking", "Leader enables orchestra", "Give credit generously"], tools: ["Orchestration Model", "Team Composition Framework", "Enablement Assessment"], aha: "Great leaders enable orchestra, not perform it.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "From conductor to enabler", objective: "Understand orchestral leadership principles", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Great Conductors"}, {type: "Conversation", label: "Maestro Isabella Rossi – Leadership Mentor"}]}, {title: "Apply the Framework", subtitle: "Redesign team collaboration model", objective: "Create ensemble-based team dynamics", duration: 20, blocks: [{type: "Resource", label: "Current Team Structure"}, {type: "UserInput", label: "Team Orchestration Plan"}, {type: "Conversation", label: "Carlos Martinez – Senior Contributor"}]}, {title: "Navigate Resistance", subtitle: "High performers fear losing autonomy", objective: "Balance individual excellence with ensemble purpose", duration: 20, blocks: [{type: "Conversation", label: "Dr. Sophia Andretti – Star Performer"}, {type: "UserInput", label: "Address Concerns"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Conduct first integrated team performance", objective: "Launch orchestral team norms", duration: 15, blocks: [{type: "UserInput", label: "Team Collaboration Charter"}, {type: "Conversation", label: "First Ensemble Meeting"}]}]}, {id: 31, title: "Genius at the Table", pillar: "cf", level: "executive", archetype: "ted-talk", tedTalk: "Linda Hill – How to Manage for Collective Genius", hook: "Linda Hill studied Pixar, Google, and other creative powerhouses and found that innovation isn't about one genius—it's about collective genius. Your Rconst cases = [/* CASES_DATA_PLACEHOLDER */];D team just presented 'the next big thing,' and it's brilliant—but it requires three departments to cooperate in ways they never have.", competencies: ["Curate creative collaboration", "Build innovation platforms", "Lead distributed creativity"], mindsets: ["Collaborative creativity", "Shared ownership", "Platform > hierarchy"], tools: ["Creative Collaboration Design", "Innovation Governance Model", "Collective Genius Framework"], aha: "Shift from command-control to curating creative collaboration.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Steps to unlocking collective genius", objective: "Understand conditions enabling collaborative innovation", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Collective Genius"}, {type: "Conversation", label: "Professor Linda Hill – Researcher"}]}, {title: "Apply the Framework", subtitle: "Redesign innovation governance", objective: "Create structures for collective problem-solving", duration: 25, blocks: [{type: "Resource", label: "Strategic Challenge const cases = [/* CASES_DATA_PLACEHOLDER */]; Current Process"}, {type: "UserInput", label: "Redesign Innovation Operating Model"}, {type: "Conversation", label: "Dr. Anil Patel – CSO"}]}, {title: "Navigate Resistance", subtitle: "Executives fear loss of control", objective: "Reframe collective genius as advantage", duration: 20, blocks: [{type: "Conversation", label: "Thomas Reynolds – CFO"}, {type: "UserInput", label: "Build Business Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch collective genius initiative", objective: "Roll out new innovation culture", duration: 15, blocks: [{type: "UserInput", label: "Implementation const cases = [/* CASES_DATA_PLACEHOLDER */]; Change Plan"}, {type: "Conversation", label: "Executive Team Launch Meeting"}]}]}, {id: 32, title: "Rules of Engagement", pillar: "ts", level: "executive", archetype: "ted-talk", tedTalk: "Laszlo Bock – Work Rules!", hook: "Laszlo Bock built Google's people operations from scratch and proved that the most powerful lever isn't who you hire—it's how you structure their work. Glassdoor reviews of your company keep saying the same thing: 'Great mission, terrible management.' You've tried manager training twice. The scores haven't moved.", competencies: ["Design human-centered organizations", "Structure work for engagement", "Build trust-based systems"], mindsets: ["Human-centered design", "Culture through structure", "Trust > control"], tools: ["Work Design Canvas", "Engagement Structure Framework", "Trust Audit"], aha: "Most powerful lever is how you structure work.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Principles behind world-class talent systems", objective: "Learn how culture and systems shape performance", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Work Rules!"}, {type: "Conversation", label: "Laszlo Bock – Former Google CHRO"}]}, {title: "Apply the Framework", subtitle: "Audit and redesign talent systems", objective: "Apply principles to your org context", duration: 25, blocks: [{type: "Resource", label: "Current HR Policies"}, {type: "UserInput", label: "Redesign Talent const cases = [/* CASES_DATA_PLACEHOLDER */]; Culture Systems"}, {type: "Conversation", label: "Margaret Johnson – CHRO"}]}, {title: "Navigate Resistance", subtitle: "Legacy leaders resist transparency", objective: "Build coalition for systemic change", duration: 20, blocks: [{type: "Conversation", label: "Richard Foster – Old Guard Executive"}, {type: "UserInput", label: "Change Strategy"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Announce organizational transformation", objective: "Communicate new work rules", duration: 15, blocks: [{type: "UserInput", label: "Transformation Communication Plan"}, {type: "Conversation", label: "Organization-Wide Launch"}]}]}, {id: 33, title: "Radical Transparency", pillar: "ts", level: "executive", archetype: "ted-talk", tedTalk: "Ray Dalio – How to Build a Company Where the Best Ideas Win", hook: "Ray Dalio built Bridgewater into the world's largest hedge fund by making radical transparency a system, not a slogan. A junior analyst just challenged the SVP's strategy in a meeting—and got shut down immediately. Privately, four directors told you the analyst was right.", competencies: ["Create transparency systems", "Enable radical truth-telling", "Build idea meritocracy"], mindsets: ["Radical transparency", "Truth > hierarchy", "Ideas win on merit"], tools: ["Transparency Protocol", "Truth-Telling Framework", "Meritocracy Design"], aha: "Hierarchy blocks great decisions—transparency dissolves it.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Radical transparency as advantage", objective: "Understand principles of idea meritocracy", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Best Ideas Win"}, {type: "Conversation", label: "Ray Dalio – Founder"}]}, {title: "Apply the Framework", subtitle: "Redesign decision-making for transparency", objective: "Create systems where best ideas surface", duration: 25, blocks: [{type: "Resource", label: "Current Decision-Making Processes"}, {type: "UserInput", label: "Design Transparency Systems"}, {type: "Conversation", label: "Dr. Nathan Cross – Org Designer"}]}, {title: "Navigate Resistance", subtitle: "Managers fear losing authority", objective: "Reframe leadership as facilitation", duration: 20, blocks: [{type: "Conversation", label: "Patricia Hughes – Threatened Executive"}, {type: "UserInput", label: "Address Fear const cases = [/* CASES_DATA_PLACEHOLDER */]; Resistance"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Roll out transparency initiative", objective: "Launch new decision-making culture", duration: 15, blocks: [{type: "UserInput", label: "Transparency Protocol"}, {type: "Conversation", label: "Executive Team Town Hall"}]}]}, {id: 34, title: "Fear const cases = [/* CASES_DATA_PLACEHOLDER */]; Focus", pillar: "ts", level: "rising", archetype: "ted-talk", tedTalk: "Tim Ferriss – Why You Should Define Your Fears", hook: "Tim Ferriss told a TED audience that the antidote to anxiety isn't optimism—it's defining your fears with the same rigor you'd use on a business plan. You've been offered a stretch assignment in a market you know nothing about. The upside is enormous; the downside is very public failure.", competencies: ["Practice fear definition", "Build decision courage", "Transform fear into clarity"], mindsets: ["Fear-driven clarity", "Name the fear", "Courage through clarity"], tools: ["Fear Definition Canvas", "Worst-Case Scenario Planning", "Fear-to-Focus Framework"], aha: "Defining fears reveals what you care about.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "The power of fear articulation", objective: "Understand how fear clarifies priorities", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Define Your Fears"}, {type: "Conversation", label: "Tim Ferriss – Entrepreneur"}]}, {title: "Apply the Framework", subtitle: "Define fears and clarify path", objective: "Apply fear-driven clarity to leadership", duration: 20, blocks: [{type: "UserInput", label: "Define Your Fears const cases = [/* CASES_DATA_PLACEHOLDER */]; Opportunities"}, {type: "Conversation", label: "Coach Elena Rodriguez – Mentor"}]}, {title: "Navigate Resistance", subtitle: "Culture dismisses fear talk", objective: "Normalize healthy fear awareness", duration: 20, blocks: [{type: "Conversation", label: "Kevin Tran – Tough Culture Manager"}, {type: "UserInput", label: "Build Culture Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Create fear-aware team culture", objective: "Establish fear articulation norms", duration: 15, blocks: [{type: "UserInput", label: "Team Fear const cases = [/* CASES_DATA_PLACEHOLDER */]; Focus Session Plan"}, {type: "Conversation", label: "First Team Session Simulation"}]}]}, {id: 35, title: "Persistence Through Passion", pillar: "ts", level: "experienced", archetype: "ted-talk", tedTalk: "Angela Duckworth – Grit", hook: "Angela Duckworth's research proved that grit—passion sustained over years—predicts achievement better than raw talent. You're choosing between two candidates for a critical leadership role: one has a perfect resume, the other failed twice, adapted each time, and keeps showing up.", competencies: ["Assess talent and grit", "Build perseverance culture", "Recognize resilience"], mindsets: ["Growth mindset", "Passion + persistence", "Grit predicts achievement"], tools: ["Grit Assessment", "Resilience Building Framework", "Passion-Purpose Alignment"], aha: "Grit predicts achievement better than talent.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Grit beats talent", objective: "Understand grit as a selectable trait", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Grit"}, {type: "Conversation", label: "Dr. Angela Duckworth – Psychologist"}]}, {title: "Apply the Framework", subtitle: "Redesign talent selection", objective: "Identify and select for grit alongside skills", duration: 25, blocks: [{type: "Resource", label: "Current Hiring Criteria"}, {type: "UserInput", label: "Design Grit-Inclusive Strategy"}, {type: "Conversation", label: "Jennifer Walsh – Head of Talent"}]}, {title: "Navigate Resistance", subtitle: "Hiring managers resist soft criteria", objective: "Build business case for grit", duration: 20, blocks: [{type: "Conversation", label: "Marcus Chen – Results-Focused Manager"}, {type: "UserInput", label: "Evidence-Based Argument"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch grit-informed strategy", objective: "Implement new selection approach", duration: 15, blocks: [{type: "UserInput", label: "Talent Strategy Update"}, {type: "Conversation", label: "Hiring Team Training"}]}]}, {id: 36, title: "The Single Story Trap", pillar: "cf", level: "rising", archetype: "ted-talk", tedTalk: "Chimamanda Ngozi Adichie – The Danger of a Single Story", hook: "Chimamanda Ngozi Adichie warned that when we reduce people to a single story, we rob them of their complexity—and ourselves of understanding. Your company just acquired a team in Lagos, and the integration plan was written entirely by people in New York.", competencies: ["Combat stereotyping", "Seek multiple narratives", "Build perspective diversity"], mindsets: ["Anti-stereotyping", "Multiple stories matter", "Nuance > narrative"], tools: ["Narrative Diversity Framework", "Stereotype Audit", "Perspective Mapping"], aha: "Single stories create stereotypes.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "How single stories limit understanding", objective: "Recognize danger of incomplete narratives", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Danger of a Single Story"}, {type: "Conversation", label: "Aisha Patel – Dconst cases = [/* CASES_DATA_PLACEHOLDER */];I Lead"}]}, {title: "Apply the Framework", subtitle: "Identify single stories in your team", objective: "Expand understanding of colleagues", duration: 20, blocks: [{type: "UserInput", label: "Map Single Stories"}, {type: "Conversation", label: "Miguel Santos – Colleague"}]}, {title: "Navigate Resistance", subtitle: "Team defaults to stereotypes under pressure", objective: "Build culture seeking complexity", duration: 20, blocks: [{type: "Conversation", label: "Rachel Kim – Performance Peer"}, {type: "UserInput", label: "Intervention Strategy"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch inclusive perspective initiative", objective: "Create rituals expanding understanding", duration: 15, blocks: [{type: "UserInput", label: "Team Learning Initiative Design"}, {type: "Conversation", label: "First Perspective-Sharing Session"}]}]}, {id: 37, title: "Team Architecture", pillar: "cf", level: "rising", archetype: "ted-talk", tedTalk: "Tom Wujec – Build a Tower, Build a Team", hook: "Tom Wujec ran the famous 'marshmallow challenge' with hundreds of teams and discovered that how a team collaborates matters more than who's on it. You gave five teams the same challenge and the same resources—one finished in half the time, and the difference wasn't talent or effort.", competencies: ["Assess team dynamics", "Identify communication patterns", "Design experiential learning"], mindsets: ["Experiential learning", "Small choices matter", "System reveals capability"], tools: ["Team Dynamics Assessment", "Experiential Learning Design", "Communication Pattern Map"], aha: "How teams execute reveals risk, communication, learning.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Marshmallow challenge teaches team dynamics", objective: "Understand hidden dynamics in team performance", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Build a Tower"}, {type: "Conversation", label: "Tom Wujec – Systems Thinker"}]}, {title: "Apply the Framework", subtitle: "Run challenge to diagnose team dynamics", objective: "Reveal team execution patterns", duration: 20, blocks: [{type: "UserInput", label: "Team Challenge Design"}, {type: "Conversation", label: "Dr. Kenji Yamamoto – Team Coach"}]}, {title: "Navigate Resistance", subtitle: "Team sees exercise as not real work", objective: "Connect experiential learning to performance", duration: 20, blocks: [{type: "Conversation", label: "David Hughes – Skeptical Member"}, {type: "UserInput", label: "Build the Connection"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Transform insights into operating norms", objective: "Implement changes from challenge insights", duration: 15, blocks: [{type: "UserInput", label: "Team Operating Model Redesign"}, {type: "Conversation", label: "Team Commitment Session"}]}]}, {id: 38, title: "The Rule Paradox", pillar: "ts", level: "experienced", archetype: "ted-talk", tedTalk: "Yves Morieux – How Too Many Rules at Work Keep You from Getting Things Done", hook: "Yves Morieux showed that every time organizations add rules to manage complexity, they create more complexity. Your organization just added three new approval layers 'to reduce risk.' Six months later, decisions take twice as long and risk hasn't budged.", competencies: ["Reduce organizational complexity", "Remove restrictive rules", "Build adaptive systems"], mindsets: ["Systems thinking", "Simplicity through clarity", "Rules create complexity"], tools: ["Rule Audit", "Complexity Reduction Framework", "Adaptive Systems Design"], aha: "More rules create complexity—reducing constraints increases speed.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Why rules breed more rules", objective: "Understand the complexity spiral", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Too Many Rules"}, {type: "Conversation", label: "Yves Morieux – Org Expert"}]}, {title: "Apply the Framework", subtitle: "Audit and eliminate unnecessary rules", objective: "Simplify processes for agility", duration: 25, blocks: [{type: "Resource", label: "Current Process Inventory"}, {type: "UserInput", label: "Rule Audit const cases = [/* CASES_DATA_PLACEHOLDER */]; Simplification"}, {type: "Conversation", label: "Operations Director"}]}, {title: "Navigate Resistance", subtitle: "Compliance teams fear removing rules", objective: "Distinguish necessary constraints from waste", duration: 20, blocks: [{type: "Conversation", label: "Lisa Grant – Chief Compliance Officer"}, {type: "UserInput", label: "Build the Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch simplification initiative", objective: "Implement streamlined operating model", duration: 15, blocks: [{type: "UserInput", label: "Simplification Roadmap"}, {type: "Conversation", label: "Organization Town Hall"}]}]}, {id: 39, title: "The Happiness Dividend", pillar: "tm", level: "rising", archetype: "ted-talk", tedTalk: "Shawn Achor – The Happy Secret to Better Work", hook: "Shawn Achor's research at Harvard revealed that happiness fuels performance, not the other way around—and most companies have the formula backwards. Your highest-performing team is also your most stressed. They hit every target last quarter, but three people are showing signs of burnout.", competencies: ["Build positive deviance", "Create wellbeing culture", "Link happiness to performance"], mindsets: ["Positive deviance", "Happiness fuels success", "Optimism is trainable"], tools: ["Wellbeing Audit", "Positive Practice Framework", "Happiness-Performance Link"], aha: "Happiness fuels success, not just result of it.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Science of happiness and performance", objective: "Understand happiness as performance lever", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – The Happy Secret"}, {type: "Conversation", label: "Shawn Achor – Happiness Researcher"}]}, {title: "Apply the Framework", subtitle: "Design happiness interventions", objective: "Create practices increasing wellbeing and performance", duration: 20, blocks: [{type: "Resource", label: "Team Engagement Assessment"}, {type: "UserInput", label: "Happiness Intervention Plan"}, {type: "Conversation", label: "HR Partner – Culture Specialist"}]}, {title: "Navigate Resistance", subtitle: "Team sees happiness as soft in a crisis", objective: "Connect happiness to business results", duration: 20, blocks: [{type: "Conversation", label: "James Morrison – Results-Focused Leader"}, {type: "UserInput", label: "Build Your Argument"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Launch wellbeing initiative", objective: "Establish practices fueling both", duration: 15, blocks: [{type: "UserInput", label: "Team Wellbeing Program"}, {type: "Conversation", label: "Team Launch const cases = [/* CASES_DATA_PLACEHOLDER */]; Commitment"}]}]}, {id: 40, title: "Safety Builds Strength", pillar: "tm", level: "executive", archetype: "ted-talk", tedTalk: "Simon Sinek – Why Good Leaders Make You Feel Safe", hook: "Simon Sinek observed that great leaders don't demand sacrifice—they make people feel safe enough to give it freely. A factory worker proposed a safety improvement that would cost $200 but save lives. It sat in an approval queue for six months, and nobody can explain why.", competencies: ["Create psychological safety", "Protect team members", "Build circle of safety"], mindsets: ["Protective leadership", "Safety enables risk-taking", "Trust through protection"], tools: ["Safety Audit", "Vulnerability Container Design", "Circle of Safety Framework"], aha: "Great leaders make people feel safe to take risks.", chapters: [{title: "Watch const cases = [/* CASES_DATA_PLACEHOLDER */]; Reflect", subtitle: "Safety as leadership responsibility", objective: "Understand psychological safety as transformational", duration: 15, blocks: [{type: "Resource", label: "TED Talk Clip – Leaders Make You Feel Safe"}, {type: "Conversation", label: "Simon Sinek – Leadership Philosopher"}]}, {title: "Apply the Framework", subtitle: "Audit and redesign safety culture", objective: "Create conditions of genuine safety", duration: 25, blocks: [{type: "Resource", label: "Organization Safety Assessment"}, {type: "UserInput", label: "Safety Culture Redesign"}, {type: "Conversation", label: "Victoria Chen – Executive Coach"}]}, {title: "Navigate Resistance", subtitle: "Competitive culture resists softness", objective: "Prove safety increases performance", duration: 20, blocks: [{type: "Conversation", label: "Michael Torres – Old Guard Executive"}, {type: "UserInput", label: "Evidence-Based Case"}]}, {title: "Synthesize const cases = [/* CASES_DATA_PLACEHOLDER */]; Present", subtitle: "Transform culture toward safety", objective: "Launch safety and trust initiative", duration: 15, blocks: [{type: "UserInput", label: "Safety Culture Roadmap"}, {type: "Conversation", label: "Executive Team Commitment"}]}]}, {id: 41, title: "Crisis at 31 Million Bottles", pillar: "cf", level: "executive", archetype: "biz-school", realCase: "Johnson const cases = [/* CASES_DATA_PLACEHOLDER */]; Johnson – Tylenol Crisis (1982)", hook: "In 1982, Johnson const cases = [/* CASES_DATA_PLACEHOLDER */]; Johnson faced every CEO's nightmare: seven people dead from cyanide-laced Tylenol capsules, and 31 million bottles on shelves that might be poisoned. The FBI couldn't tell them how far the tampering went, and their CEO had to face cameras in one hour.", competencies: ["Execute crisis communication", "Balance transparency and reputation", "Rebuild trust after catastrophe"], mindsets: ["Transparency over profit", "Long-term trust > short-term damage control", "Values under pressure"], tools: ["Crisis Communication Protocol", "Stakeholder Impact Matrix", "Reputation Recovery Framework"], aha: "Trust is the only currency that survives catastrophe.", chapters: [{title: "Contamination Detected", subtitle: "A poisoned bottle surfaces in Chicago", objective: "Understand crisis magnitude and interdependencies", duration: 15, blocks: [{type: "Resource", label: "Morning Briefing: Poisoned Batches"}, {type: "Conversation", label: "Dr. James Burke – CEO"}, {type: "UserInput", label: "Initial Crisis Assessment"}]}, {title: "The War Room", subtitle: "Executives clash over recall costs and brand survival", objective: "Navigate competing pressures cross-functionally", duration: 20, blocks: [{type: "Resource", label: "Financial Impact Analysis"}, {type: "MultiConversation", label: "CFO, General Counsel, VP Marketing"}, {type: "UserInput", label: "Stakeholder Alignment Exercise"}]}, {title: "The Call: Recall or Contain?", subtitle: "Nationwide recall or targeted response", objective: "Make pivotal decision under incomplete information", duration: 20, blocks: [{type: "Resource", label: "Recall vs Containment Analysis"}, {type: "Conversation", label: "Dr. James Burke – Final Conversation"}, {type: "UserInput", label: "The Decision: Commit Your Choice"}]}, {title: "Aftermath: Trust or Rust", subtitle: "See what happened next", objective: "Understand long-term ROI of values-driven leadership", duration: 15, blocks: [{type: "Resource", label: "Case Outcome const cases = [/* CASES_DATA_PLACEHOLDER */]; Market Impact"}, {type: "Conversation", label: "Dr. James Burke – Reflection"}]}]}, {id: 42, title: "The Red Envelope", pillar: "ba", level: "executive", archetype: "biz-school", realCase: "Netflix – Pivot to Streaming (2007-2013)", hook: "Netflix's DVD-by-mail business was printing money when a small internal team proposed betting the company's future on an unproven technology called streaming. Wall Street would punish them if they tried—and extinction awaited if they didn't.", competencies: ["Cannibalize own business model", "Invest in future despite short-term pain", "Execute strategic pivot"], mindsets: ["Embrace disruption", "Cannibalization courage", "Future > present"], tools: ["Growth Projection Model", "Business Model Canvas", "Disruption Strategy Framework"], aha: "Must cannibalize your cash cow to survive.", chapters: [{title: "The Shifting Ground", subtitle: "Reed Hastings sees streaming will replace DVDs", objective: "Recognize strategic inflection points", duration: 15, blocks: [{type: "Resource", label: "Market Data const cases = [/* CASES_DATA_PLACEHOLDER */]; Broadband Trends (2007)"}, {type: "Conversation", label: "Reed Hastings – CEO"}, {type: "UserInput", label: "Technology Trajectory Assessment"}]}, {title: "The Pressure Campaign", subtitle: "Board demands DVD growth. Hastings wants to bet the company.", objective: "Manage stakeholders with counterintuitive strategy", duration: 20, blocks: [{type: "Resource", label: "Financial Projections: Two Scenarios"}, {type: "MultiConversation", label: "Board Member, CFO, Content Officer"}, {type: "UserInput", label: "Build Your Investment Case"}]}, {title: "The Bet: Streaming First", subtitle: "Commit to streaming while cash machine runs", objective: "Decisions destroying current profits for future ones", duration: 20, blocks: [{type: "Resource", label: "Investment Allocation Framework"}, {type: "Conversation", label: "Reed Hastings – The Choice"}, {type: "UserInput", label: "Allocate $500M: DVD vs Streaming"}]}, {title: "The Reckoning", subtitle: "Stock crashes 77%. Then streaming takes off.", objective: "Evaluate decisions over longer horizons", duration: 15, blocks: [{type: "Resource", label: "The Five-Year Journey"}, {type: "Conversation", label: "Reed Hastings – Hindsight"}]}]}, {id: 43, title: "The Resurrection", pillar: "ba", level: "executive", archetype: "biz-school", realCase: "Apple – Turnaround Under Steve Jobs (1997)", hook: "When Steve Jobs returned to Apple in 1997, the company was 90 days from bankruptcy, the board had just fired his predecessor, and employees were updating their resumes. He had one shot to convince them this brand still meant something.", competencies: ["Execute strategic repositioning", "Simplify product portfolio", "Rebuild brand identity"], mindsets: ["Less is more", "Simplicity is genius", "Focus through subtraction"], tools: ["Product Portfolio Matrix", "Simplification Framework", "Brand Positioning Model"], aha: "When dying, simplicity is oxygen.", chapters: [{title: "The Graveyard", subtitle: "Apple: 15 product lines, no focus, $1.9B debt", objective: "Diagnose strategic chaos", duration: 15, blocks: [{type: "Resource", label: "Apple Portfolio Crisis (1997)"}, {type: "Conversation", label: "Steve Jobs – Fresh Off the Plane"}, {type: "UserInput", label: "Portfolio Triage Exercise"}]}, {title: "The Surgery Room", subtitle: "Jobs cuts 70% of products. Leadership screams.", objective: "Navigate resistance to radical simplification", duration: 20, blocks: [{type: "Resource", label: "The Product Line Cuts"}, {type: "MultiConversation", label: "CFO, VP Marketing, VP Engineering"}, {type: "UserInput", label: "Make Your Cuts"}]}, {title: "The Bet: iMac and Faith", subtitle: "Invest $150M when everyone else chases Wintel", objective: "Make bets when data is ambiguous but vision is clear", duration: 20, blocks: [{type: "Resource", label: "iMac Business Case"}, {type: "Conversation", label: "Steve Jobs – Design Philosophy"}, {type: "UserInput", label: "Fund or Kill: The iMac Decision"}]}, {title: "The Resurrection", subtitle: "By 1998 Apple is back. By 2001, printing cash.", objective: "How constraint and clarity create advantage", duration: 15, blocks: [{type: "Resource", label: "Apple Financial Turnaround"}, {type: "Conversation", label: "Steve Jobs – Lessons on Simplicity"}]}]}, {id: 44, title: "The Kodak Moment That Wasn't", pillar: "ba", level: "experienced", archetype: "biz-school", realCase: "Kodak – Failure to Adapt (1975-2012)", hook: "Kodak's own engineers invented the digital camera in 1975—then executives locked it in a drawer because it threatened the film business. Twenty years later, competitors turned that invention into an empire while Kodak filed for bankruptcy.", competencies: ["Navigate innovator's dilemma", "Question success assumptions", "Pursue disruptive innovation"], mindsets: ["Question success", "Innovate against yourself", "Disruption as survival"], tools: ["Innovation Pipeline Map", "Disruption Assessment", "Success Vulnerability Analysis"], aha: "Innovator's enemy is own past success.", chapters: [{title: "The Invention", subtitle: "1975: Sasson invents digital camera. Board says not for us.", objective: "How companies miss threats they create", duration: 15, blocks: [{type: "Resource", label: "The Sasson Demonstration (1975)"}, {type: "Conversation", label: "Steve Sasson – The Inventor"}, {type: "UserInput", label: "Kodak Board Assessment"}]}, {title: "The Strategic Blindness", subtitle: "Digital growing. Film still strong. Why cannibalize?", objective: "Explore barriers to self-disruption", duration: 20, blocks: [{type: "Resource", label: "Kodak vs Digital: Financial Models"}, {type: "MultiConversation", label: "CFO, CEO, CTO"}, {type: "UserInput", label: "Digital or Double Down?"}]}, {title: "The Delayed Response", subtitle: "By 2005, Kodak invests in digital. Too late.", objective: "Timing and decisiveness compound advantage", duration: 20, blocks: [{type: "Resource", label: "Kodak Late Digital Investments"}, {type: "Conversation", label: "CEO – Why We Waited"}, {type: "UserInput", label: "Rescue Mission"}]}, {title: "The Collapse", subtitle: "2012: Kodak files for bankruptcy.", objective: "Hard lessons about organizational inertia", duration: 15, blocks: [{type: "Resource", label: "Kodak Bankruptcy"}, {type: "Conversation", label: "Steve Sasson – Reflection"}]}]}, {id: 45, title: "Peloton's Midnight", pillar: "ba", level: "rising", archetype: "biz-school", realCase: "Peloton – Pandemic Response (2020-2022)", hook: "Peloton's connected fitness bikes saw demand triple overnight during the pandemic, and Wall Street was calling them the next Apple. Deep in the supply chain data, a single number suggested this wouldn't last—but nobody at Peloton wanted to hear it.", competencies: ["Manage hypergrowth", "Distinguish real from exuberant demand", "Navigate growth correction"], mindsets: ["Real demand vs exuberance", "Growth has costs", "Sustainability matters"], tools: ["Unit Economics Dashboard", "Growth Sustainability Model", "Demand Validation Framework"], aha: "Exponential growth feels genius until it stops.", chapters: [{title: "The Perfect Storm", subtitle: "2020: Lockdowns. Can't make bikes fast enough.", objective: "How conditions distort strategic judgment", duration: 15, blocks: [{type: "Resource", label: "Peloton 2020 Boom"}, {type: "Conversation", label: "John Foley – CEO"}, {type: "UserInput", label: "Demand Projection Exercise"}]}, {title: "The Bet on Permanence", subtitle: "CEO commits $2B to expansion. Is demand permanent?", objective: "Uncertainty in exponential growth decisions", duration: 20, blocks: [{type: "Resource", label: "$2B Expansion Plan"}, {type: "MultiConversation", label: "CFO, COO, Marketing Chief"}, {type: "UserInput", label: "Approve or Pause Expansion?"}]}, {title: "The Reversal", subtitle: "Vaccines. Gyms reopen. Demand collapses.", objective: "Decisions when bets go wrong", duration: 20, blocks: [{type: "Resource", label: "The Demand Cliff"}, {type: "Conversation", label: "John Foley – Crisis Mode"}, {type: "UserInput", label: "Emergency Cost Restructuring"}]}, {title: "The Reckoning", subtitle: "Stock crashes 95%. What went wrong?", objective: "Lessons about humility and capital discipline", duration: 15, blocks: [{type: "Resource", label: "Financial Collapse Timeline"}, {type: "Conversation", label: "John Foley – Reflection"}]}]}, {id: 46, title: "Airbnb's Pandemic Pivot", pillar: "ba", level: "rising", archetype: "biz-school", realCase: "Airbnb – COVID Pivot (2020)", hook: "In March 2020, Airbnb lost 80% of its revenue in eight weeks as the travel industry collapsed. Co-founder Brian Chesky faced a brutal choice: cut everything and survive, or rebuild the entire platform from scratch.", competencies: ["Pivot business model rapidly", "Experiment at scale", "Navigate uncertainty decisively"], mindsets: ["Experimentation mindset", "Adapt or die", "Crisis reveals opportunity"], tools: ["Scenario Planning Matrix", "Rapid Experimentation Framework", "Business Model Pivot Canvas"], aha: "When business dies, build something new from wreckage.", chapters: [{title: "The Collapse", subtitle: "March 2020: Reservations crater 80%", objective: "Crisis diagnosis and rapid data interpretation", duration: 15, blocks: [{type: "Resource", label: "Airbnb COVID Impact"}, {type: "Conversation", label: "Brian Chesky – CEO"}, {type: "UserInput", label: "Crisis Triage Dashboard"}]}, {title: "The Brainstorm", subtitle: "Domestic travel is recovering. Pivot there?", objective: "Creative problem-solving under constraint", duration: 20, blocks: [{type: "Resource", label: "Domestic Travel Trend Data"}, {type: "MultiConversation", label: "CTO, CFO, Chief Product Officer"}, {type: "UserInput", label: "Design the Pivot"}]}, {title: "The Execution", subtitle: "Shift to domestic leisure. Cut $1B in costs.", objective: "Rapid decisions with incomplete information", duration: 20, blocks: [{type: "Resource", label: "Pivot Execution Plan"}, {type: "Conversation", label: "Brian Chesky – The Pivot"}, {type: "UserInput", label: "Execute: Sequencing const cases = [/* CASES_DATA_PLACEHOLDER */]; Messaging"}]}, {title: "The Recovery", subtitle: "By summer 2020, growing again. IPO that December.", objective: "Constraint drives innovation", duration: 15, blocks: [{type: "Resource", label: "Recovery const cases = [/* CASES_DATA_PLACEHOLDER */]; IPO"}, {type: "Conversation", label: "Brian Chesky – Hindsight"}]}]}, {id: 47, title: "The Culture Code", pillar: "tm", level: "executive", archetype: "biz-school", realCase: "Microsoft – Cultural Transformation Under Nadella (2014)", hook: "Microsoft had posted its third consecutive quarter of flat growth, and the world's best engineers were leaving for Google. New CEO Satya Nadella's first company-wide email said something no one at Microsoft expected: 'We need to learn.'", competencies: ["Drive culture transformation", "Shift mindsets at scale", "Model growth mindset"], mindsets: ["Growth mindset", "Culture as competitive advantage", "Psychological safety"], tools: ["Culture Diagnostic Canvas", "Mindset Shift Framework", "Transformation Roadmap"], aha: "Culture is your competitive moat.", chapters: [{title: "The Dying Giant", subtitle: "2013: Microsoft owns PC era. Clouds are rising.", objective: "Diagnose cultural roadblocks to change", duration: 15, blocks: [{type: "Resource", label: "Microsoft 2013 State of Play"}, {type: "Conversation", label: "Satya Nadella – Incoming CEO"}, {type: "UserInput", label: "Cultural Diagnosis Exercise"}]}, {title: "The War Room", subtitle: "Nadella meets leadership. Some get it. Some are defiant.", objective: "Navigate resistance to cultural change", duration: 20, blocks: [{type: "Resource", label: "Microsoft Leadership Landscape"}, {type: "MultiConversation", label: "Windows Division, Cloud SVP, CFO"}, {type: "UserInput", label: "Stakeholder Alignment Strategy"}]}, {title: "The Manifesto", subtitle: "Growth Mindset. Partnership. Cloud as Center.", objective: "Translate intention into cultural reality", duration: 20, blocks: [{type: "Resource", label: "Nadella Growth Mindset Framework"}, {type: "Conversation", label: "Satya Nadella – The Culture Pitch"}, {type: "UserInput", label: "Design Cultural Cascade"}]}, {title: "The Transformation", subtitle: "By 2020, market cap tripled. Azure thriving.", objective: "Culture change compounds advantage", duration: 15, blocks: [{type: "Resource", label: "Microsoft 2014-2020 Metrics"}, {type: "Conversation", label: "Satya Nadella – Culture as Advantage"}]}]}, {id: 48, title: "Whole Foods in the Amazon", pillar: "cf", level: "experienced", archetype: "biz-school", realCase: "Amazon – Whole Foods Acquisition (2017)", hook: "Amazon paid $13.7 billion for Whole Foods—a grocery chain whose culture was the opposite of Amazon's in every way. The deal closed Monday. By Friday, Whole Foods employees were wondering if everything they'd built was about to be erased.", competencies: ["Integrate acquired cultures", "Navigate cross-functional tensions", "Balance integration and autonomy"], mindsets: ["Think in systems", "Integration is harder than acquisition", "Culture tensions are inevitable"], tools: ["Synergy Mapping Canvas", "Integration Governance Model", "Cultural Due Diligence Framework"], aha: "You're not acquiring assets—inheriting tensions.", chapters: [{title: "The Acquisition", subtitle: "Amazon buys Whole Foods for $13.7B", objective: "Understand strategic intent and reactions", duration: 15, blocks: [{type: "Resource", label: "Deal Thesis"}, {type: "Conversation", label: "Jeff Bezos – The Vision"}, {type: "UserInput", label: "Stakeholder Reaction Map"}]}, {title: "The Collision", subtitle: "Organic meets algorithm. Localism meets ruthlessness.", objective: "Navigate cultural and operational tensions", duration: 20, blocks: [{type: "Resource", label: "WFM vs Amazon: Differences"}, {type: "MultiConversation", label: "WFM CEO, Amazon SVP, HR Lead"}, {type: "UserInput", label: "Integration Decision Framework"}]}, {title: "The Integration", subtitle: "Homogenize or preserve? Each has costs.", objective: "Trade-offs between synergy and brand", duration: 20, blocks: [{type: "Resource", label: "Integration Scenarios"}, {type: "Conversation", label: "Jeff Bezos – Integration"}, {type: "UserInput", label: "Choose Your Path"}]}, {title: "The Reckoning", subtitle: "Prime in stores. Prices down. Margins compressed.", objective: "Evaluate Mconst cases = [/* CASES_DATA_PLACEHOLDER */];A value creation", duration: 15, blocks: [{type: "Resource", label: "Integration Results"}, {type: "Conversation", label: "Jeff Bezos – Mconst cases = [/* CASES_DATA_PLACEHOLDER */];A Lessons"}]}]}, {id: 49, title: "Meta's Metaverse", pillar: "ba", level: "experienced", archetype: "biz-school", realCase: "Meta – Metaverse Bet (2021-present)", hook: "Mark Zuckerberg told Wall Street that Meta's future was a technology that didn't exist yet—and renamed the entire company to prove he meant it. The stock was in freefall, and his own team wanted to know: was this vision or delusion?", competencies: ["Make long-term capital bets", "Embrace strategic ambiguity", "Balance conviction and humility"], mindsets: ["Embrace ambiguity", "Conviction in uncertainty", "Long-term vision"], tools: ["Capital Allocation Model", "Scenario Planning Matrix", "Strategic Bet Framework"], aha: "Inaction is most dangerous bet.", chapters: [{title: "The Realization", subtitle: "Zuckerberg sees mobile plateauing. Next is VR/AR.", objective: "Recognize inflection points and future threats", duration: 15, blocks: [{type: "Resource", label: "Social Media Saturation Analysis"}, {type: "Conversation", label: "Mark Zuckerberg – The Vision"}, {type: "UserInput", label: "Technology Trajectory Assessment"}]}, {title: "The Bet", subtitle: "Rename Meta. Invest $10B+ annually. Board split.", objective: "Navigate resistance to moonshot bets", duration: 20, blocks: [{type: "Resource", label: "Metaverse Investment Plan"}, {type: "MultiConversation", label: "CFO, Board Member, CPO"}, {type: "UserInput", label: "Build Investment Case"}]}, {title: "The Pressure", subtitle: "Stock crashes 65%. Reality Labs loses $13.7B.", objective: "Decision-making under mounting pressure", duration: 20, blocks: [{type: "Resource", label: "Stock Collapse"}, {type: "Conversation", label: "Mark Zuckerberg – Defending the Bet"}, {type: "UserInput", label: "Accelerate, Pause, or Pivot?"}]}, {title: "The Ongoing Reckoning", subtitle: "We don't know if he's right. He's doubling down.", objective: "Conviction, humility, and the long game", duration: 15, blocks: [{type: "Resource", label: "Metaverse Progress"}, {type: "Conversation", label: "Mark Zuckerberg – Conviction and Doubt"}]}]}, {id: 50, title: "General Motors Electrified", pillar: "ba", level: "executive", archetype: "biz-school", realCase: "GM – Electric Vehicle Transition (2020-present)", hook: "For a century, General Motors built the world's most iconic combustion engines. Then CEO Mary Barra announced GM would stop making them entirely. Half the workforce didn't believe her—the other half was terrified she was serious.", competencies: ["Lead industry transformation", "Overcome legacy constraints", "Invest in future capabilities"], mindsets: ["Disrupt yourself", "Legacy is burden and anchor", "Transformation is existential"], tools: ["EV Economics Model", "Transformation Roadmap", "Capability Building Framework"], aha: "Greatest asset becomes greatest burden.", chapters: [{title: "The Shift", subtitle: "GM commits all-electric by 2035", objective: "Strategic shifts before they're inevitable", duration: 15, blocks: [{type: "Resource", label: "GM EV Commitment"}, {type: "Conversation", label: "Mary Barra – CEO"}, {type: "UserInput", label: "EV Transition Pathway"}]}, {title: "The Collision", subtitle: "ICE generates 90% of profits. EV cannibalizes ICE.", objective: "Navigate economics of self-disruption", duration: 20, blocks: [{type: "Resource", label: "EV vs ICE Unit Economics"}, {type: "MultiConversation", label: "CFO, VP Manufacturing, Supply Chain VP"}, {type: "UserInput", label: "ICE to EV Allocation"}]}, {title: "The Commitment", subtitle: "$35B to EV and battery tech. Shutter ICE plants.", objective: "Irreversible decisions prioritizing future", duration: 20, blocks: [{type: "Resource", label: "Capital Commitment"}, {type: "Conversation", label: "Mary Barra – The Transformation"}, {type: "UserInput", label: "Plant Closure Stakeholder Management"}]}, {title: "The Race", subtitle: "Tesla, Hyundai, BYD winning. GM fighting for position.", objective: "Evaluate bets in shifting landscape", duration: 15, blocks: [{type: "Resource", label: "EV Market Competition"}, {type: "Conversation", label: "Mary Barra – Transformation Lessons"}]}]}, {id: 51, title: "IBM's Resurrection", pillar: "cf", level: "executive", archetype: "biz-school", realCase: "IBM – Transformation Under Gerstner (1993)", hook: "IBM posted an $8 billion loss in 1993—the largest in corporate history—and the new CEO from RJR Nabisco didn't know a mainframe from a microwave. Everyone said Big Blue was finished. Lou Gerstner disagreed.", competencies: ["Execute organizational restructuring", "Shift customer focus", "Rebuild through discipline"], mindsets: ["Customer focus", "Discipline over complexity", "System redesign"], tools: ["Organizational Restructuring Canvas", "Customer Value Mapping", "Transformation Execution Framework"], aha: "Served boxes instead of customers.", chapters: [{title: "The Crisis", subtitle: "1992: IBM posts largest loss: $8.1B", objective: "Organizational dysfunction under pressure", duration: 15, blocks: [{type: "Resource", label: "IBM 1992 Crisis"}, {type: "Conversation", label: "Lou Gerstner – New CEO"}, {type: "UserInput", label: "IBM Diagnostic Assessment"}]}, {title: "The Diagnosis", subtitle: "Gerstner sees: organized around products not customers", objective: "Identify root causes behind symptoms", duration: 20, blocks: [{type: "Resource", label: "IBM Organizational Structure"}, {type: "MultiConversation", label: "Operations Chief, Services VP, Finance VP"}, {type: "UserInput", label: "Restructuring Decision Framework"}]}, {title: "The Transformation", subtitle: "Reorganize around customer segments", objective: "Execute complex org change under duress", duration: 20, blocks: [{type: "Resource", label: "IBM Reorganization Plan"}, {type: "Conversation", label: "Lou Gerstner – The Restructuring"}, {type: "UserInput", label: "Execute the Reorganization"}]}, {title: "The Redemption", subtitle: "By 1997, profitable. By 2000, most respected.", objective: "Organizational alignment multiplies advantage", duration: 15, blocks: [{type: "Resource", label: "IBM Recovery"}, {type: "Conversation", label: "Lou Gerstner – Reflection"}]}]}, {id: 52, title: "Starbucks Reckoning", pillar: "tm", level: "experienced", archetype: "biz-school", realCase: "Starbucks – Racial Bias Training (2018)", hook: "In 2018, two Black men were arrested inside a Philadelphia Starbucks for doing nothing wrong, and the video hit 10 million views overnight. Starbucks had just become the symbol of a problem much bigger than one store.", competencies: ["Address systemic bias", "Respond to crisis authentically", "Build accountability systems"], mindsets: ["Accountability over defense", "Systemic bias requires systemic response", "Values in crisis"], tools: ["Crisis Response Protocol", "Stakeholder Impact Matrix", "Accountability Framework"], aha: "Brand credible as worst moment and response.", chapters: [{title: "The Incident", subtitle: "Two Black men arrested in Philadelphia Starbucks", objective: "How a moment can expose organizational values", duration: 15, blocks: [{type: "Resource", label: "The Philadelphia Incident"}, {type: "Conversation", label: "Kevin Johnson – CEO"}, {type: "UserInput", label: "Initial Response Assessment"}]}, {title: "The Pressure Cooker", subtitle: "Leadership split on response", objective: "Navigate misalignment during crisis", duration: 20, blocks: [{type: "Resource", label: "Internal Leadership Response"}, {type: "MultiConversation", label: "General Counsel, VP Ops, Chief of Staff"}, {type: "UserInput", label: "Minimal vs Transformational Response"}]}, {title: "The Decision: Go Big", subtitle: "Close 8,000 stores. Train 175,000 employees.", objective: "High-risk decisions prioritizing values", duration: 20, blocks: [{type: "Resource", label: "Training Decision"}, {type: "Conversation", label: "Kevin Johnson – The Decision"}, {type: "UserInput", label: "Design the Training"}]}, {title: "The Aftermath", subtitle: "Training happens. Has anything changed?", objective: "Crisis response is beginning not end", duration: 15, blocks: [{type: "Resource", label: "Post-Training Reality"}, {type: "Conversation", label: "Kevin Johnson – Beyond the Training"}]}]}, {id: 53, title: "Blockbuster's Last Ride", pillar: "ba", level: "experienced", archetype: "biz-school", realCase: "Blockbuster vs Netflix (2000-2010)", hook: "In 2000, a scrappy startup called Netflix offered to sell Blockbuster their streaming platform for $50 million. Blockbuster's leadership team laughed it off—they had 9,000 stores and Netflix had a website. What could possibly go wrong?", competencies: ["Assess competitive threats", "Overcome organizational denial", "Navigate disruption threat"], mindsets: ["Embrace disruption", "Know thyself", "Knowing isn't believing"], tools: ["Threat Assessment Matrix", "Competitive Foresight Framework", "Disruption Response Model"], aha: "Knowing isn't believing.", chapters: [{title: "The Threat Emerges", subtitle: "2000: Netflix launches. Blockbuster dismisses it.", objective: "Why companies dismiss existential threats", duration: 15, blocks: [{type: "Resource", label: "Netflix Launch"}, {type: "Conversation", label: "John Antioco – Blockbuster CEO"}, {type: "UserInput", label: "Threat Severity Evaluation"}]}, {title: "The Moment", subtitle: "2004: Netflix growing. Antioco proposes Online.", objective: "Cannibalizing threat of self-disruption", duration: 20, blocks: [{type: "Resource", label: "Blockbuster Online Business Case"}, {type: "MultiConversation", label: "CFO, COO, Board Member"}, {type: "UserInput", label: "Fund Online or Protect Stores?"}]}, {title: "The Half-Measures", subtitle: "Online launches but handicapped", objective: "Organizational constraints doom responses", duration: 20, blocks: [{type: "Resource", label: "Blockbuster Online vs Netflix"}, {type: "Conversation", label: "John Antioco – Strategic Dilemma"}, {type: "UserInput", label: "Reimagine Digital Future"}]}, {title: "The Collapse", subtitle: "2010: Bankrupt. All advantages, all safe choices.", objective: "Organizational inertia lessons", duration: 15, blocks: [{type: "Resource", label: "Bankruptcy Analysis"}, {type: "Conversation", label: "John Antioco – What I'd Change"}]}]}, {id: 54, title: "Toyota's Way", pillar: "tm", level: "rising", archetype: "biz-school", realCase: "Toyota – Kaizen const cases = [/* CASES_DATA_PLACEHOLDER */]; Quality Revolution", hook: "At Toyota, a worker on the assembly line pulled a cord that stopped all production. In any other factory, she'd be fired. At Toyota, the CEO was about to thank her in front of the entire company.", competencies: ["Build continuous improvement culture", "Empower frontline thinking", "Create problem-solving systems"], mindsets: ["Everyone is problem solver", "Continuous improvement mindset", "Humility and respect"], tools: ["Kaizen Action Board", "Problem-Solving Framework", "Continuous Improvement System"], aha: "Worker had permission to stop line.", chapters: [{title: "The Challenge", subtitle: "1950s: Toyota tiny vs Detroit", objective: "Constraint forces innovation", duration: 15, blocks: [{type: "Resource", label: "Toyota 1950s Challenge"}, {type: "Conversation", label: "Taiichi Ohno – Production Pioneer"}, {type: "UserInput", label: "Quality vs Scale"}]}, {title: "The Insight", subtitle: "What if every worker could stop the line?", objective: "Counterintuitive approaches to problems", duration: 20, blocks: [{type: "Resource", label: "Toyota Production System"}, {type: "MultiConversation", label: "Shigeo Shingo, Plant Manager, Union Rep"}, {type: "UserInput", label: "Design the Kaizen System"}]}, {title: "The Transformation", subtitle: "Every worker empowered. Quality circles emerge.", objective: "Cultural change at scale", duration: 20, blocks: [{type: "Resource", label: "Kaizen Implementation"}, {type: "Conversation", label: "Taiichi Ohno – Building Culture"}, {type: "UserInput", label: "Roll Out: Training const cases = [/* CASES_DATA_PLACEHOLDER */]; Incentives"}]}, {title: "The Dominance", subtitle: "By 1980s, quality dominates. Detroit struggles.", objective: "Culture compounds advantage over decades", duration: 15, blocks: [{type: "Resource", label: "Toyota vs Detroit Metrics"}, {type: "Conversation", label: "Taiichi Ohno – Legacy"}]}]}, {id: 55, title: "The Messaging War", pillar: "ba", level: "experienced", archetype: "biz-school", realCase: "Slack vs Microsoft Teams (2016-present)", hook: "Slack built the product that defined workplace messaging, and then Microsoft gave away a competing version for free inside a product everyone already had. Slack's market share was melting by the week.", competencies: ["Navigate competitive positioning", "Understand distribution advantage", "Compete in platform era"], mindsets: ["Distribution beats innovation", "Platform advantage", "Market share reality"], tools: ["Competitive Positioning Canvas", "Distribution Analysis Model", "Platform Economics Framework"], aha: "Slack invented market—Teams bundled it.", chapters: [{title: "The Market Pioneer", subtitle: "Slack launches. Fastest SaaS adoption ever.", objective: "First-mover advantages and market creation", duration: 15, blocks: [{type: "Resource", label: "Slack Explosive Growth"}, {type: "Conversation", label: "Stewart Butterfield – Founder"}, {type: "UserInput", label: "Competitive Advantages Analysis"}]}, {title: "The Threat", subtitle: "Microsoft launches Teams. Bundled free with Office.", objective: "Assess threats from entrenched competitors", duration: 20, blocks: [{type: "Resource", label: "Teams Launch const cases = [/* CASES_DATA_PLACEHOLDER */]; Strategy"}, {type: "MultiConversation", label: "Slack CEO, Microsoft CEO, Microsoft CFO"}, {type: "UserInput", label: "Competitive Response Strategy"}]}, {title: "The Collision", subtitle: "Teams grows on Office's back. Slack losing share.", objective: "Navigate competitive compression", duration: 20, blocks: [{type: "Resource", label: "Market Share Evolution"}, {type: "Conversation", label: "Butterfield – Competition Tightens"}, {type: "UserInput", label: "Survive or Exit?"}]}, {title: "The Resolution", subtitle: "Slack to Salesforce for $27.7B. Was it a win?", objective: "Evaluate long-term competitive outcomes", duration: 15, blocks: [{type: "Resource", label: "Slack Path to Salesforce"}, {type: "Conversation", label: "Butterfield – Looking Back"}]}]}, {id: 56, title: "Spotify's Negotiation", pillar: "cf", level: "experienced", archetype: "biz-school", realCase: "Spotify – Music Licensing Model", hook: "Spotify needed every major record label to license their music to a platform many of them believed was destroying their industry. The labels had the content; Spotify had the vision. Neither side had leverage—yet.", competencies: ["Negotiate complex stakeholders", "Align incentives across ecosystem", "Create sustainable business models"], mindsets: ["Find mutual gain", "Aligned incentives create moats", "Sustainability > victory"], tools: ["Negotiation Interest Matrix", "Incentive Alignment Framework", "Ecosystem Design Model"], aha: "Aligned incentives create sustainable advantage.", chapters: [{title: "The Dilemma", subtitle: "Labels control 99% of content. Demand millions.", objective: "Tension between innovation and incumbents", duration: 15, blocks: [{type: "Resource", label: "Music Industry Economics"}, {type: "Conversation", label: "Daniel Ek – Founder"}, {type: "UserInput", label: "Licensing Challenge Assessment"}]}, {title: "The Negotiation", subtitle: "Meet Universal, Sony, Warner. Each wants different deal.", objective: "Multi-party negotiations with misaligned incentives", duration: 20, blocks: [{type: "Resource", label: "Major Label Positions"}, {type: "MultiConversation", label: "Universal EVP, Sony Lead, Independent Artist"}, {type: "UserInput", label: "Negotiation Strategy"}]}, {title: "The Deal Design", subtitle: "Huge upfront losses but per-stream royalties at scale.", objective: "Creative deal structures creating mutual value", duration: 20, blocks: [{type: "Resource", label: "Licensing Deal Structure"}, {type: "Conversation", label: "Daniel Ek – Deal Architecture"}, {type: "UserInput", label: "Finalize Terms"}]}, {title: "The Vindication", subtitle: "Labels made billions. Artists earned more. Win-win-win.", objective: "Aligned incentives create sustainable advantage", duration: 15, blocks: [{type: "Resource", label: "Success const cases = [/* CASES_DATA_PLACEHOLDER */]; Industry Transformation"}, {type: "Conversation", label: "Daniel Ek – The Long Game"}]}]}, {id: 57, title: "Southwest Airlines: Culture as Moat", pillar: "ts", level: "experienced", archetype: "biz-school", realCase: "Southwest Airlines – People-First Culture", hook: "Every airline in the industry was cutting costs by cutting people. Southwest Airlines' CEO doubled down on the most expensive workforce in aviation—and called it the smartest financial decision she'd ever made.", competencies: ["Build culture as competitive advantage", "Hire for culture fit", "Sustain culture through systems"], mindsets: ["People over process", "Culture as moat", "Consistency through hiring"], tools: ["Cultural Values Matrix", "Hiring Alignment Framework", "Culture Sustainability System"], aha: "Hired people who wanted to serve.", chapters: [{title: "The Founding", subtitle: "1971: Kelleher hires for attitude not experience", objective: "Founder values shape organizational DNA", duration: 15, blocks: [{type: "Resource", label: "Southwest Founding Philosophy"}, {type: "Conversation", label: "Herb Kelleher – The Southwest Way"}, {type: "UserInput", label: "Define Hiring Principles"}]}, {title: "The Culture Test", subtitle: "Others copy low-cost but can't copy culture", objective: "Maintain culture during rapid growth", duration: 20, blocks: [{type: "Resource", label: "Expansion const cases = [/* CASES_DATA_PLACEHOLDER */]; Culture Challenge"}, {type: "MultiConversation", label: "VP Talent, CFO, Operations VP"}, {type: "UserInput", label: "Culture-Scaling Strategy"}]}, {title: "The Advantage", subtitle: "Competitors cut costs wrong. Southwest maintains both.", objective: "Culture compounds competitive advantage", duration: 20, blocks: [{type: "Resource", label: "Southwest vs Competitors Metrics"}, {type: "Conversation", label: "Kelleher – Why Culture Wins"}, {type: "UserInput", label: "Maintain Culture Under Pressure"}]}, {title: "The Legacy", subtitle: "50 years old, still profitable, still beloved.", objective: "Sustainable advantage is cultural", duration: 15, blocks: [{type: "Resource", label: "50-Year Performance"}, {type: "Conversation", label: "Kelleher – Reflections"}]}]}, {id: 58, title: "Disney's Force Acquisition", pillar: "cf", level: "experienced", archetype: "biz-school", realCase: "Disney – Lucasfilm Acquisition (2012)", hook: "Disney paid $4 billion for Lucasfilm, a company whose most valuable asset was a 35-year-old space opera franchise. Half of Hollywood thought it was genius; the other half thought Mickey Mouse just overpaid for a lightsaber.", competencies: ["Value creative acquisitions", "Preserve creative culture", "Integrate with respect"], mindsets: ["Bet big on culture assets", "IP worth more to right buyer", "Respect creative independence"], tools: ["Acquisition Valuation Model", "Creative Integration Framework", "Cultural Fit Assessment"], aha: "IP worth more to right buyer.", chapters: [{title: "The Opportunity", subtitle: "George Lucas wants to sell. Iger sees unlimited potential.", objective: "Recognize strategic opportunities in creative assets", duration: 15, blocks: [{type: "Resource", label: "Lucasfilm Asset Overview"}, {type: "Conversation", label: "Bob Iger – CEO Disney"}, {type: "UserInput", label: "What's Lucasfilm Worth?"}]}, {title: "The Negotiation", subtitle: "$4B is staggering. Board questions value.", objective: "Navigate skepticism and deal negotiations", duration: 20, blocks: [{type: "Resource", label: "Deal Negotiations"}, {type: "MultiConversation", label: "CFO, Board Member, George Lucas"}, {type: "UserInput", label: "Build Investment Case"}]}, {title: "The Integration", subtitle: "Integrate without destroying what made it special.", objective: "Navigate creative integration", duration: 20, blocks: [{type: "Resource", label: "Integration Plan"}, {type: "Conversation", label: "Bob Iger – Integration Challenge"}, {type: "UserInput", label: "Preserve const cases = [/* CASES_DATA_PLACEHOLDER */]; Evolve Strategy"}]}, {title: "The Vindication", subtitle: "$12B+ in films. Theme parks. $4B became $20B+.", objective: "Evaluate ROI of strategic Mconst cases = [/* CASES_DATA_PLACEHOLDER */];A", duration: 15, blocks: [{type: "Resource", label: "Lucasfilm ROI"}, {type: "Conversation", label: "Bob Iger – Long-Term Play"}]}]}, {id: 59, title: "Domino's Turnaround", pillar: "ba", level: "rising", archetype: "biz-school", realCase: "Domino's Pizza – Turnaround (2009)", hook: "Domino's own customers were roasting the pizza on national television, and the internet was piling on. The marketing team wanted to fight back; new CEO Patrick Doyle did something no brand had ever tried: he agreed with them.", competencies: ["Face brutal truth about problems", "Redesign from ground up", "Rebuild brand through authenticity"], mindsets: ["Listen to criticism", "Authenticity in recovery", "Admit failure bravely"], tools: ["Brand Health Dashboard", "Redesign Framework", "Recovery Communication Strategy"], aha: "Pizza was bad—owned it and fixed it.", chapters: [{title: "The Crisis", subtitle: "Pizza widely mocked. Sales decline.", objective: "Recognize when core product is the problem", duration: 15, blocks: [{type: "Resource", label: "Domino's Decline const cases = [/* CASES_DATA_PLACEHOLDER */]; Feedback"}, {type: "Conversation", label: "Patrick Doyle – Incoming CEO"}, {type: "UserInput", label: "Root Cause Analysis"}]}, {title: "The Reckoning", subtitle: "Team tastes pizza. It's really bad.", objective: "Face hard truths about performance", duration: 20, blocks: [{type: "Resource", label: "Product Analysis"}, {type: "MultiConversation", label: "Product Officer, VP Ops, CMO"}, {type: "UserInput", label: "Admit or Defend?"}]}, {title: "The Pivot", subtitle: "Change recipe. Publicly acknowledge failure.", objective: "Vulnerable decisions for long-term credibility", duration: 20, blocks: [{type: "Resource", label: "Reformulation const cases = [/* CASES_DATA_PLACEHOLDER */]; Launch Plan"}, {type: "Conversation", label: "Patrick Doyle – Vulnerability Strategy"}, {type: "UserInput", label: "Design 'We Heard You' Campaign"}]}, {title: "The Redemption", subtitle: "Stock soars 30%. Pizza sales grow.", objective: "Power of accountability and transparency", duration: 15, blocks: [{type: "Resource", label: "Recovery const cases = [/* CASES_DATA_PLACEHOLDER */]; Stock Performance"}, {type: "Conversation", label: "Doyle – What Honesty Built"}]}]}, {id: 60, title: "Zoom's Hypergrowth", pillar: "tm", level: "rising", archetype: "biz-school", realCase: "Zoom – Hypergrowth (2020)", hook: "Zoom went from 10 million to 300 million users in 90 days when the pandemic hit. The product was holding—barely. But Zoom's 2,500 employees were breaking, and CEO Eric Yuan could see it in every standup meeting.", competencies: ["Manage hypergrowth", "Preserve culture at scale", "Build scaling systems"], mindsets: ["Preserve culture during scale", "Growth without losing soul", "Intentional culture building"], tools: ["Growth Scaling Playbook", "Culture Preservation Framework", "Scaling System Design"], aha: "Challenge was growing without losing soul.", chapters: [{title: "The Inflection", subtitle: "March 2020: Users jump 10x in days.", objective: "Exponential inflection points", duration: 15, blocks: [{type: "Resource", label: "Zoom COVID Inflection"}, {type: "Conversation", label: "Eric Yuan – CEO"}, {type: "UserInput", label: "Growth Impact Assessment"}]}, {title: "The Tension", subtitle: "Hiring thousands. Security issues. Culture fragmenting.", objective: "Navigate chaos of hypergrowth", duration: 20, blocks: [{type: "Resource", label: "Hypergrowth Challenges"}, {type: "MultiConversation", label: "VP Engineering, HR Chief, Security Officer"}, {type: "UserInput", label: "Growth Scaling Prioritization"}]}, {title: "The Disciplined Growth", subtitle: "Slow releases. Hire for culture. Fix security publicly.", objective: "Intentional decisions preserving values", duration: 20, blocks: [{type: "Resource", label: "Disciplined Scaling Approach"}, {type: "Conversation", label: "Eric Yuan – Protecting Culture"}, {type: "UserInput", label: "Team Scaling Plan"}]}, {title: "The Result", subtitle: "350M+ users, $2.6B revenue. Culture survived.", objective: "Intentionality during extreme growth", duration: 15, blocks: [{type: "Resource", label: "Growth const cases = [/* CASES_DATA_PLACEHOLDER */]; Org Health"}, {type: "Conversation", label: "Eric Yuan – Leading Through Growth"}]}]}];
+
+const pillarLabels = { ba: 'Business Acumen', cf: 'Cross-Functional', tm: 'Team Management', ts: 'Talent Selection' };
+const archetypeLabels = { 'mini-sim': 'Mini-Sim', 'biz-school': 'Biz School', 'ted-talk': 'TED Talk' };
+const blockIcons = { Resource: '📄', Custom: '🛠️', Conversation: '💬', UserInput: '✏️' };
+
+let filters = { pillar: 'all', level: 'all', archetype: 'all', search: '' };
+
+// FILTER BUTTONS
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const filterType = btn.dataset.filter;
+    const value = btn.dataset.value;
+    filters[filterType] = value;
+
+    // Update active states
+    document.querySelectorAll(`.filter-btn[data-filter="${filterType}"]`).forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    renderCards();
+  });
+});
+
+// SEARCH
+document.getElementById('search').addEventListener('input', (e) => {
+  filters.search = e.target.value.toLowerCase();
+  renderCards();
+});
+
+// RENDER CARDS
+function renderCards() {
+  const filtered = cases.filter(c => {
+    if (filters.pillar !== 'all' && c.pillar !== filters.pillar) return false;
+    if (filters.level !== 'all' && c.level !== filters.level) return false;
+    if (filters.archetype !== 'all' && c.archetype !== filters.archetype) return false;
+    if (filters.search && !c.title.toLowerCase().includes(filters.search) && !c.hook.toLowerCase().includes(filters.search)) return false;
+    return true;
+  });
+
+  const grid = document.getElementById('cards-grid');
+  const empty = document.getElementById('empty-state');
+  const count = document.getElementById('results-count');
+
+  count.textContent = filtered.length;
+
+  if (filtered.length === 0) {
+    grid.style.display = 'none';
+    empty.style.display = 'block';
+    return;
+  }
+
+  grid.style.display = 'grid';
+  empty.style.display = 'none';
+
+  grid.innerHTML = filtered.map(c => `
+    <div class="case-card ${c.pillar}" onclick="openModal(${c.id})">
+      <div class="card-accent ${c.pillar}"></div>
+      <div class="card-body">
+        <div class="card-badges">
+          <span class="badge ${c.pillar}">${pillarLabels[c.pillar]}</span>
+          <span class="badge level">${c.level.charAt(0).toUpperCase() + c.level.slice(1)}</span>
+          <span class="badge archetype">${archetypeLabels[c.archetype]}</span>
+        </div>
+        <div class="card-title">${c.title}</div>
+        <div class="card-hook">${c.hook}</div>
+        <div class="card-meta">
+          <span>📚 ${c.chapters.length} chapters</span>
+          <span>⏱️ ${c.chapters.reduce((sum, ch) => sum + (ch.duration || 0), 0)} min</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// MODAL
+function openModal(id) {
+  const c = cases.find(x => x.id === id);
+  if (!c) return;
+
+  const content = document.getElementById('modal-content');
+  const totalDuration = c.chapters.reduce((sum, ch) => sum + (ch.duration || 0), 0);
+
+  content.innerHTML = `
+    <div class="modal-badges">
+      <span class="badge ${c.pillar}">${pillarLabels[c.pillar]}</span>
+      <span class="badge level">${c.level.charAt(0).toUpperCase() + c.level.slice(1)}</span>
+      <span class="badge archetype">${archetypeLabels[c.archetype]}</span>
+      <span class="badge level">⏱️ ${totalDuration} min</span>
+    </div>
+    <h2 class="modal-title">${c.title}</h2>
+    <div class="modal-hook">${c.hook}</div>
+
+    ${c.aha ? `
+    <div class="modal-aha">
+      <div class="modal-aha-label">💡 Aha Moment</div>
+      <div class="modal-aha-text">"${c.aha}"</div>
+    </div>
+    ` : ''}
+
+    <div class="modal-section">
+      <div class="modal-grid">
+        <div class="modal-block ${c.pillar}">
+          <h4>Competencies</h4>
+          <ul>${c.competencies.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="modal-block ${c.pillar}">
+          <h4>Mindsets</h4>
+          <ul>${c.mindsets.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+        <div class="modal-block ${c.pillar}">
+          <h4>Tools & Frameworks</h4>
+          <ul>${c.tools.map(x => `<li>${x}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-section">
+      <div class="modal-section-title">Chapters</div>
+      <div class="chapters-list">
+        ${c.chapters.map((ch, i) => `
+          <div class="chapter-card" onclick="this.classList.toggle('open')">
+            <div class="chapter-header">
+              <div style="display:flex;align-items:center;">
+                <div class="chapter-num">${i + 1}</div>
+                <div class="chapter-info">
+                  <div class="chapter-title">${ch.title}</div>
+                  <div class="chapter-subtitle">${ch.subtitle || ''}</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;">
+                <span class="chapter-duration">${ch.duration || 0} min</span>
+                <span class="chapter-toggle">▼</span>
+              </div>
+            </div>
+            <div class="chapter-body">
+              <div class="chapter-content">
+                ${ch.objective ? `<div class="chapter-objective"><strong>Objective:</strong> ${ch.objective}</div>` : ''}
+                <div class="chapter-blocks">
+                  ${(ch.blocks || []).map(b => `
+                    <span class="block-chip ${b.type}">${blockIcons[b.type] || '📦'} ${b.label}</span>
+                  `).join('')}
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-overlay').addEventListener('click', closeModal);
+document.getElementById('modal-close').addEventListener('click', closeModal);
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// INIT
+renderCards();
+</script>
+
+</body>
+</html>
