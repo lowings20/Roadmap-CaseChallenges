@@ -862,6 +862,7 @@ function renderCards() {
   grid.innerHTML = filtered.map(c => `
     <div class="case-card ${c.pillar}" onclick="openModal(${c.id})">
       <div class="card-accent ${c.pillar}"></div>
+      <button class="fav-btn ${favorites.has(c.id) ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite(${c.id})">${favorites.has(c.id) ? '⭐' : '☆'}</button>
       <div class="card-body">
         <div class="card-badges">
           <span class="badge ${c.pillar}">${pillarLabels[c.pillar]}</span>
